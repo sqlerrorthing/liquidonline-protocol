@@ -3,6 +3,7 @@ package fun.sqlerrorthing.liquidonline.packets;
 import fun.sqlerrorthing.liquidonline.packets.c2s.login.C2SLogin;
 import fun.sqlerrorthing.liquidonline.packets.s2c.login.S2CConnected;
 import fun.sqlerrorthing.liquidonline.packets.s2c.login.S2CDisconnected;
+import fun.sqlerrorthing.liquidonline.packets.s2c.login.S2CValidationFailure;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
@@ -51,7 +52,8 @@ public class Packets {
 
             // Server-to-Client
             S2CDisconnected.class,
-            S2CConnected.class
+            S2CConnected.class,
+            S2CValidationFailure.class
     };
 
     /**
