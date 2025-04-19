@@ -44,7 +44,7 @@ jobs:
         if: success()
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ env.VERSION }}-SNAPSHOT-${{ env.COMMIT_HASH }}
+          tag_name: ${{ env.VERSION }}-${{ env.COMMIT_HASH }}
           body: "This is a pre-release for version ${{ env.VERSION }}."
           draft: false
           prerelease: true
