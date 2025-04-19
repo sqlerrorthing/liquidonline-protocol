@@ -61,10 +61,10 @@ public class Packets {
      * and calling {@link Packet#getId()}.
      * </p>
      */
-    public static final Map<Class<? extends Packet>, Byte> PACKETS_WITH_ID;
+    public static final Map<Byte, Class<? extends Packet>> PACKETS_WITH_ID;
 
     static {
-        Map<Class<? extends Packet>, Byte> packets = new HashMap<>();
+        Map<Byte, Class<? extends Packet>> packets = new HashMap<>();
         Map<Byte, List<Class<? extends Packet>>> idsToPackets = new HashMap<>();
 
         for (var packet : AVAILABLE_PACKETS) {
@@ -72,7 +72,7 @@ public class Packets {
                 Packet instance = packet.getDeclaredConstructor().newInstance();
                 byte id = instance.getId();
 
-                packets.put(packet, id);
+                packets.put(id, packet);
                 idsToPackets.computeIfAbsent(id, k -> new ArrayList<>()).add(packet);
             } catch (InstantiationException | IllegalAccessException |
                      InvocationTargetException | NoSuchMethodException e) {
