@@ -3,7 +3,7 @@ plugins {
     id 'maven-publish'
 }
 
-group = 'fun.sqlerrorthing'
+group = 'com.github.sqlerrorthing'
 version = '1.0.0'
 
 repositories {
