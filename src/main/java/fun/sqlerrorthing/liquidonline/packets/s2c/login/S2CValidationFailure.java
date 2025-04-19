@@ -7,7 +7,9 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -25,7 +27,20 @@ public class S2CValidationFailure implements Packet {
     /**
      * It contains the path and the message of why this path was not completed.
      */
-    Map<String, String> details;
+    @NotNull
+    @jakarta.validation.constraints.NotNull
+    List<FailureDetail> details;
+
+    @Data
+    @SuperBuilder
+    @Builder
+    @FieldDefaults(level = AccessLevel.PRIVATE)
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class FailureDetail {
+        private @Nullable String path;
+        private @NotNull String message;
+    }
 
     @Override
     public byte id() {
