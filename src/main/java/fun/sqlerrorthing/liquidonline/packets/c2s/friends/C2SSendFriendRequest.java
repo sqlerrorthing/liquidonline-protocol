@@ -1,4 +1,4 @@
-package fun.sqlerrorthing.liquidonline.packets.c2s.update;
+package fun.sqlerrorthing.liquidonline.packets.c2s.friends;
 
 import fun.sqlerrorthing.liquidonline.packets.Packet;
 import fun.sqlerrorthing.liquidonline.packets.PacketBound;
@@ -10,7 +10,7 @@ import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
 
 /**
- * Sent when a player's nickname changes.
+ * Sends a friend request to a player
  */
 @Data
 @SuperBuilder
@@ -18,20 +18,20 @@ import lombok.experimental.SuperBuilder;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @AllArgsConstructor
 @NoArgsConstructor
-public class C2SUpdateMinecraftUsername implements Packet {
+public class C2SSendFriendRequest implements Packet {
     /**
-     * New minecraft username.
+     * Player's nickname IN THE SYSTEM, to whom to send a friend request
      */
     @org.jetbrains.annotations.NotNull
     @NotNull
     @Pattern(
-            regexp = SharedConstants.MINECRAFT_USERNAME_PATTERN,
-            message = "The username does not validate against this regular expression: " + SharedConstants.MINECRAFT_USERNAME_PATTERN
+            regexp = SharedConstants.USERNAME_PATTERN,
+            message = "The username does not validate against this regular expression: " + SharedConstants.USERNAME_PATTERN
     ) String username;
 
     @Override
     public byte id() {
-        return 4;
+        return 7;
     }
 
     @Override

@@ -1,16 +1,14 @@
-package fun.sqlerrorthing.liquidonline.packets.c2s.update;
+package fun.sqlerrorthing.liquidonline.packets.s2c.friends;
 
 import fun.sqlerrorthing.liquidonline.packets.Packet;
 import fun.sqlerrorthing.liquidonline.packets.PacketBound;
-import fun.sqlerrorthing.liquidonline.packets.SharedConstants;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
 
 /**
- * Sent when a player's nickname changes.
+ * Notifies you when you receive a new friend request
  */
 @Data
 @SuperBuilder
@@ -18,24 +16,21 @@ import lombok.experimental.SuperBuilder;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @AllArgsConstructor
 @NoArgsConstructor
-public class C2SUpdateMinecraftUsername implements Packet {
+public class S2CNewIncomingFriendRequest implements Packet {
     /**
-     * New minecraft username.
+     * Who did this request come from
      */
     @org.jetbrains.annotations.NotNull
     @NotNull
-    @Pattern(
-            regexp = SharedConstants.MINECRAFT_USERNAME_PATTERN,
-            message = "The username does not validate against this regular expression: " + SharedConstants.MINECRAFT_USERNAME_PATTERN
-    ) String username;
+    String from;
 
     @Override
     public byte id() {
-        return 4;
+        return 10;
     }
 
     @Override
     public @org.jetbrains.annotations.NotNull PacketBound packetBound() {
-        return PacketBound.CLIENT;
+        return PacketBound.SERVER;
     }
 }

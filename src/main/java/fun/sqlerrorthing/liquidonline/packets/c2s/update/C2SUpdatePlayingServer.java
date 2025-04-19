@@ -2,6 +2,8 @@ package fun.sqlerrorthing.liquidonline.packets.c2s.update;
 
 import fun.sqlerrorthing.liquidonline.packets.Packet;
 import fun.sqlerrorthing.liquidonline.packets.PacketBound;
+import fun.sqlerrorthing.liquidonline.packets.SharedConstants;
+import jakarta.validation.constraints.Pattern;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
@@ -23,7 +25,10 @@ public class C2SUpdatePlayingServer implements Packet {
      * Use <b>singleplayer</b> if the player is in the local world.
      */
     @Nullable
-    String server;
+    @Pattern(
+            regexp = SharedConstants.SERVER_IP_PATTERN,
+            message = "The server ip does not validate against this regular expression: " + SharedConstants.SERVER_IP_PATTERN
+    ) String server;
 
     @Override
     public byte id() {

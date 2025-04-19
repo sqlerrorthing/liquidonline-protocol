@@ -2,6 +2,7 @@ package fun.sqlerrorthing.liquidonline.packets.c2s.login;
 
 import fun.sqlerrorthing.liquidonline.packets.Packet;
 import fun.sqlerrorthing.liquidonline.packets.PacketBound;
+import fun.sqlerrorthing.liquidonline.packets.SharedConstants;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.*;
@@ -36,15 +37,20 @@ public final class C2SLogin implements Packet {
      */
     @org.jetbrains.annotations.NotNull
     @NotNull
-    @Pattern(regexp = "^\\w{3,16}$", message = "Username must be alphanumeric and between 3 and 16 characters")
-    String minecraftUsername;
+    @Pattern(
+            regexp = SharedConstants.MINECRAFT_USERNAME_PATTERN,
+            message = "The username does not validate against this regular expression: " + SharedConstants.MINECRAFT_USERNAME_PATTERN
+    ) String minecraftUsername;
 
     /**
      * The current server the client is playing on.
      * Use <b>singleplayer</b> if the player is in the local world.
      */
     @Nullable
-    String server;
+    @Pattern(
+            regexp = SharedConstants.SERVER_IP_PATTERN,
+            message = "The server ip does not validate against this regular expression: " + SharedConstants.SERVER_IP_PATTERN
+    ) String server;
 
     /**
      * Player head skin image 16x16.

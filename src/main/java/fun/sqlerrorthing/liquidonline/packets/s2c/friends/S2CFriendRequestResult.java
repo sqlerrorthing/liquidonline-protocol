@@ -1,0 +1,55 @@
+package fun.sqlerrorthing.liquidonline.packets.s2c.friends;
+
+import fun.sqlerrorthing.liquidonline.packets.Packet;
+import fun.sqlerrorthing.liquidonline.packets.PacketBound;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
+import lombok.experimental.SuperBuilder;
+import org.jetbrains.annotations.NotNull;
+
+/**
+ * Response when friend request was sent
+ */
+@Data
+@SuperBuilder
+@Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@AllArgsConstructor
+@NoArgsConstructor
+public class S2CFriendRequestResult implements Packet {
+    @NotNull
+    @jakarta.validation.constraints.NotNull
+    Status status;
+
+    public enum Status {
+        /**
+         * Friend request successfully sent
+         */
+        REQUESTED,
+
+        /**
+         * Friend request already sent
+         */
+        ALREADY_REQUESTED,
+
+        /**
+         * This player is already friends with this player
+         */
+        ALREADY_FRIENDS,
+
+        /**
+         * The request sent to self
+         */
+        SENT_TO_SELF
+    }
+
+    @Override
+    public byte id() {
+        return 8;
+    }
+
+    @Override
+    public @NotNull PacketBound packetBound() {
+        return PacketBound.SERVER;
+    }
+}
