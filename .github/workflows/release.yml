@@ -28,7 +28,7 @@ jobs:
         env:
           CI: true
         with:
-          arguments: genSources build
+          arguments: build
 
       - name: Get version from build.gradle
         id: get_version
