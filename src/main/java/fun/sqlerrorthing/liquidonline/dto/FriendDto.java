@@ -43,14 +43,6 @@ public class FriendDto {
     String username;
 
     /**
-     * Since when have you been friends with this player
-     * <p>Must not be {@code null}.</p>
-     */
-    @NotNull
-    @jakarta.validation.constraints.NotNull
-    Instant since;
-
-    /**
      * The friend's online status.
      * <p>
      *     If {@code true}, {@code minecraftUsername} and {@code skin} must be non-null.
