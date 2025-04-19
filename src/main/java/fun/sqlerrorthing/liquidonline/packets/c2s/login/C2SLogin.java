@@ -30,12 +30,12 @@ public class C2SLogin implements Packet {
     String token;
 
     @Override
-    public byte getId() {
+    public byte id() {
         return 0;
     }
 
     @Override
-    public @org.jetbrains.annotations.NotNull PacketBound getPacketBound() {
+    public @org.jetbrains.annotations.NotNull PacketBound packetBound() {
         return PacketBound.CLIENT;
     }
 }

@@ -29,7 +29,7 @@ public interface Packet {
      *
      * @return the unique positive {@code id} of the packet
      */
-    byte getId();
+    byte id();
 
     /**
      * Returns the bound of the packet.
@@ -38,5 +38,5 @@ public interface Packet {
      * @see PacketBound
      */
     @NotNull
-    PacketBound getPacketBound();
+    PacketBound packetBound();
 }

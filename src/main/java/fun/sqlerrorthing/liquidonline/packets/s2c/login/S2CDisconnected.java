@@ -44,12 +44,12 @@ public class S2CDisconnected implements Packet {
     }
 
     @Override
-    public byte getId() {
+    public byte id() {
         return 1;
     }
 
     @Override
-    public @org.jetbrains.annotations.NotNull PacketBound getPacketBound() {
+    public @org.jetbrains.annotations.NotNull PacketBound packetBound() {
         return PacketBound.SERVER;
     }
 }

@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
  * Utility class that holds metadata about available network packets.
  * <p>
  * This class defines and registers all available {@link Packet} implementations,
- * along with their associated IDs, obtained via their {@link Packet#getId()} method.
+ * along with their associated IDs, obtained via their {@link Packet#id()} method.
  * </p>
  *
  * <p>
@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
  * Each packet class must have:
  * <ul>
  *     <li>A no-argument constructor (used via reflection)</li>
- *     <li>Implementation of the {@link Packet#getId()} method to provide a unique packet identifier</li>
+ *     <li>Implementation of the {@link Packet#id()} method to provide a unique packet identifier</li>
  * </ul>
  * </p>
  *
@@ -58,7 +58,7 @@ public class Packets {
      * An unmodifiable map associating each available packet class with its unique byte ID.
      * <p>
      * The IDs are obtained by instantiating each packet via its no-argument constructor
-     * and calling {@link Packet#getId()}.
+     * and calling {@link Packet#id()}.
      * </p>
      */
     public static final Map<Byte, Class<? extends Packet>> PACKETS_WITH_ID;
@@ -70,7 +70,7 @@ public class Packets {
         for (var packet : AVAILABLE_PACKETS) {
             try {
                 Packet instance = packet.getDeclaredConstructor().newInstance();
-                byte id = instance.getId();
+                byte id = instance.id();
 
                 packets.put(id, packet);
                 idsToPackets.computeIfAbsent(id, k -> new ArrayList<>()).add(packet);

@@ -33,12 +33,12 @@ public class S2CConnected implements Packet {
     UserAccountDto account;
 
     @Override
-    public byte getId() {
+    public byte id() {
         return 2;
     }
 
     @Override
-    public @org.jetbrains.annotations.NotNull PacketBound getPacketBound() {
+    public @org.jetbrains.annotations.NotNull PacketBound packetBound() {
         return PacketBound.SERVER;
     }
 }
