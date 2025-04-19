@@ -23,10 +23,6 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @NoArgsConstructor
 public final class S2CDisconnected implements Packet {
-    /**
-     * The reason for disconnection sent by the server.
-     * Cannot be {@code null}.
-     */
     @NotNull
     @org.jetbrains.annotations.NotNull
     Reason reason;

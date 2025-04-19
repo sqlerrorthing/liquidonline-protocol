@@ -1,9 +1,13 @@
 package fun.sqlerrorthing.liquidonline.packets;
 
+import fun.sqlerrorthing.liquidonline.packets.c2s.friends.C2SStopBeingFriends;
+import fun.sqlerrorthing.liquidonline.packets.c2s.friends.C2SRespondFriendRequest;
+import fun.sqlerrorthing.liquidonline.packets.c2s.friends.C2SSendFriendRequest;
 import fun.sqlerrorthing.liquidonline.packets.c2s.login.C2SLogin;
 import fun.sqlerrorthing.liquidonline.packets.c2s.update.C2SUpdateMinecraftUsername;
 import fun.sqlerrorthing.liquidonline.packets.c2s.update.C2SUpdatePlayingServer;
 import fun.sqlerrorthing.liquidonline.packets.c2s.update.C2SUpdateSkin;
+import fun.sqlerrorthing.liquidonline.packets.s2c.friends.*;
 import fun.sqlerrorthing.liquidonline.packets.s2c.login.S2CConnected;
 import fun.sqlerrorthing.liquidonline.packets.s2c.login.S2CDisconnected;
 import fun.sqlerrorthing.liquidonline.packets.s2c.login.S2CValidationFailure;
@@ -56,17 +60,31 @@ public class Packets {
             C2SUpdatePlayingServer.class,
             C2SUpdateSkin.class,
 
+            C2SSendFriendRequest.class,
+            C2SRespondFriendRequest.class,
+            C2SStopBeingFriends.class,
+
             // Server-to-Client
             S2CDisconnected.class,
             S2CConnected.class,
-            S2CValidationFailure.class
+            S2CValidationFailure.class,
+
+            S2CFriendRequestResult.class,
+            S2CNewIncomingFriendRequest.class,
+            S2CStopBeingFriendsResult.class,
+            S2CFriendShipBroken.class,
+            S2COutgoingFriendRequest.class,
+            S2CFriends.class,
+            S2CFriendRequests.class,
+            S2CFriendJoined.class,
+            S2CFriendLeaved.class,
     };
 
     /**
      * An unmodifiable map associating each available packet class with its unique byte ID.
      * <p>
-     * The IDs are obtained by instantiating each packet via its no-argument constructor
-     * and calling {@link Packet#id()}.
+     *   The IDs are obtained by instantiating each packet via its no-argument constructor
+     *   and calling {@link Packet#id()}.
      * </p>
      */
     public static final Map<Byte, Class<? extends Packet>> PACKETS_WITH_ID;
