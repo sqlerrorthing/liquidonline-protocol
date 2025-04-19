@@ -75,7 +75,9 @@ public class Packets {
             S2CFriendShipBroken.class,
             S2COutgoingFriendRequest.class,
             S2CFriends.class,
-            S2CFriendRequests.class
+            S2CFriendRequests.class,
+            S2CFriendJoined.class,
+            S2CFriendLeaved.class,
     };
 
     /**
