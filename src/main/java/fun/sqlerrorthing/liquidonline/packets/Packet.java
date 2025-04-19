@@ -1,5 +1,7 @@
 package fun.sqlerrorthing.liquidonline.packets;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * Represents a network packet with a unique positive identifier.
  * <p>
@@ -28,4 +30,13 @@ public interface Packet {
      * @return the unique positive {@code id} of the packet
      */
     byte getId();
+
+    /**
+     * Returns the bound of the packet.
+     *
+     * @return the bound of the packet.
+     * @see PacketBound
+     */
+    @NotNull
+    PacketBound getPacketBound();
 }
