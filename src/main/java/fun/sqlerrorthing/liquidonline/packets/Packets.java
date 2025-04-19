@@ -1,6 +1,9 @@
 package fun.sqlerrorthing.liquidonline.packets;
 
 import fun.sqlerrorthing.liquidonline.packets.c2s.login.C2SLogin;
+import fun.sqlerrorthing.liquidonline.packets.c2s.update.C2SUpdateMinecraftUsername;
+import fun.sqlerrorthing.liquidonline.packets.c2s.update.C2SUpdatePlayingServer;
+import fun.sqlerrorthing.liquidonline.packets.c2s.update.C2SUpdateSkin;
 import fun.sqlerrorthing.liquidonline.packets.s2c.login.S2CConnected;
 import fun.sqlerrorthing.liquidonline.packets.s2c.login.S2CDisconnected;
 import fun.sqlerrorthing.liquidonline.packets.s2c.login.S2CValidationFailure;
@@ -49,6 +52,9 @@ public class Packets {
     public static final Class<? extends Packet>[] AVAILABLE_PACKETS = new Class[] {
             // Client-to-Server
             C2SLogin.class,
+            C2SUpdateMinecraftUsername.class,
+            C2SUpdatePlayingServer.class,
+            C2SUpdateSkin.class,
 
             // Server-to-Client
             S2CDisconnected.class,

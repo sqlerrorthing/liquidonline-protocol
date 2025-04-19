@@ -23,7 +23,7 @@ import java.util.Map;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @AllArgsConstructor
 @NoArgsConstructor
-public class S2CValidationFailure implements Packet {
+public final class S2CValidationFailure implements Packet {
     /**
      * It contains the path and the message of why this path was not completed.
      */
@@ -37,9 +37,9 @@ public class S2CValidationFailure implements Packet {
     @FieldDefaults(level = AccessLevel.PRIVATE)
     @AllArgsConstructor
     @NoArgsConstructor
-    public static class FailureDetail {
-        private @Nullable String path;
-        private @NotNull String message;
+    public final static class FailureDetail {
+        @Nullable String path;
+        @NotNull String message;
     }
 
     @Override

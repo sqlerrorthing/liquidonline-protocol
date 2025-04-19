@@ -22,7 +22,7 @@ import lombok.experimental.SuperBuilder;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @AllArgsConstructor
 @NoArgsConstructor
-public class S2CDisconnected implements Packet {
+public final class S2CDisconnected implements Packet {
     /**
      * The reason for disconnection sent by the server.
      * Cannot be {@code null}.
@@ -36,6 +36,11 @@ public class S2CDisconnected implements Packet {
          * The provided auth token is invalid.
          */
         INVALID_TOKEN,
+
+        /**
+         * Minecraft Username or head skin did not pass validation.
+         */
+        INVALID_INITIAL_PLAYER_DATA,
 
         /**
          * An active session with the same token already exists.

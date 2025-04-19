@@ -1,21 +1,15 @@
-package fun.sqlerrorthing.liquidonline.packets.s2c.login;
+package fun.sqlerrorthing.liquidonline.packets.c2s.update;
 
-import fun.sqlerrorthing.liquidonline.dto.UserAccountDto;
 import fun.sqlerrorthing.liquidonline.packets.Packet;
 import fun.sqlerrorthing.liquidonline.packets.PacketBound;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
 
 /**
- * The packet is sent after successful authorization by token.
- *
- * <p>
- *     Provides a user account
- * </p>
- *
- * @see UserAccountDto
+ * Sent when a player's nickname changes.
  */
 @Data
 @SuperBuilder
@@ -23,22 +17,22 @@ import lombok.experimental.SuperBuilder;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @AllArgsConstructor
 @NoArgsConstructor
-public final class S2CConnected implements Packet {
+public class C2SUpdateMinecraftUsername implements Packet {
     /**
-     * The user account
-     * Cannot be {@code null}.
+     * New minecraft username.
      */
+    @org.jetbrains.annotations.NotNull
     @NotNull
-    @org.jetbrains.annotations.Nullable
-    UserAccountDto account;
+    @Pattern(regexp = "^\\w{3,16}$", message = "Username must be alphanumeric and between 3 and 16 characters")
+    String username;
 
     @Override
     public byte id() {
-        return 2;
+        return 4;
     }
 
     @Override
     public @org.jetbrains.annotations.NotNull PacketBound packetBound() {
-        return PacketBound.SERVER;
+        return PacketBound.CLIENT;
     }
 }
