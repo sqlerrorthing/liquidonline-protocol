@@ -17,6 +17,12 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok:1.18.38'
 }
 
+tasks.register('printVersion') {
+    doLast {
+        println version
+    }
+}
+
 test {
     useJUnitPlatform()
 }
