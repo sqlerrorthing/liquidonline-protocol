@@ -20,6 +20,12 @@ import org.jetbrains.annotations.NotNull;
 @NoArgsConstructor
 public class FriendRequestDto {
     /**
+     * The id of the request.
+     * <p>Must not be {@code null}.</p>
+     */
+    int requestId;
+
+    /**
      * The username of the user associated with this friend request.
      * <p>Must not be {@code null}.</p>
      */

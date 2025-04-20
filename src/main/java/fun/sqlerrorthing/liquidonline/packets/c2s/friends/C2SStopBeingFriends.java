@@ -20,14 +20,9 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 public class C2SStopBeingFriends implements Packet {
     /**
-     * Friend's nickname, with whom to delete friendship
+     * Friend's id, with whom to delete friendship
      */
-    @org.jetbrains.annotations.NotNull
-    @NotNull
-    @Pattern(
-            regexp = SharedConstants.USERNAME_PATTERN,
-            message = "The username does not validate against this regular expression: " + SharedConstants.USERNAME_PATTERN
-    ) String username;
+    int friendId;
 
     @Override
     public byte id() {
