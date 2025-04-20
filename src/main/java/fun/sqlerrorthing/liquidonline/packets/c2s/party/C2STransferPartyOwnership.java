@@ -1,13 +1,14 @@
-package fun.sqlerrorthing.liquidonline.packets.c2s.friends;
+package fun.sqlerrorthing.liquidonline.packets.c2s.party;
 
 import fun.sqlerrorthing.liquidonline.packets.Packet;
 import fun.sqlerrorthing.liquidonline.packets.PacketBound;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
+import org.jetbrains.annotations.NotNull;
 
 /**
- * Request to end friendship with the specified player
+ * Sent from the client to the server when the current party owner wants to transfer party ownership to another member.
  */
 @Data
 @SuperBuilder
@@ -15,19 +16,19 @@ import lombok.experimental.SuperBuilder;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @AllArgsConstructor
 @NoArgsConstructor
-public class C2SStopBeingFriends implements Packet {
+public class C2STransferPartyOwnership implements Packet {
     /**
-     * Friend's id, with whom to delete friendship
+     * The unique ID of the member who should become the new party owner.
      */
-    int friendId;
+    int memberId;
 
     @Override
     public byte id() {
-        return 11;
+        return 38;
     }
 
     @Override
-    public @org.jetbrains.annotations.NotNull PacketBound packetBound() {
+    public @NotNull PacketBound packetBound() {
         return PacketBound.CLIENT;
     }
 }

@@ -4,6 +4,7 @@ import fun.sqlerrorthing.liquidonline.packets.c2s.friends.C2SStopBeingFriends;
 import fun.sqlerrorthing.liquidonline.packets.c2s.friends.C2SRespondFriendRequest;
 import fun.sqlerrorthing.liquidonline.packets.c2s.friends.C2SSendFriendRequest;
 import fun.sqlerrorthing.liquidonline.packets.c2s.login.C2SLogin;
+import fun.sqlerrorthing.liquidonline.packets.c2s.party.*;
 import fun.sqlerrorthing.liquidonline.packets.c2s.update.C2SUpdateMinecraftUsername;
 import fun.sqlerrorthing.liquidonline.packets.c2s.update.C2SUpdatePlayingServer;
 import fun.sqlerrorthing.liquidonline.packets.c2s.update.C2SUpdateSkin;
@@ -11,6 +12,7 @@ import fun.sqlerrorthing.liquidonline.packets.s2c.friends.*;
 import fun.sqlerrorthing.liquidonline.packets.s2c.login.S2CConnected;
 import fun.sqlerrorthing.liquidonline.packets.s2c.login.S2CDisconnected;
 import fun.sqlerrorthing.liquidonline.packets.s2c.login.S2CValidationFailure;
+import fun.sqlerrorthing.liquidonline.packets.s2c.party.*;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
@@ -64,6 +66,15 @@ public class Packets {
             C2SRespondFriendRequest.class,
             C2SStopBeingFriends.class,
 
+            C2SCreateParty.class,
+            C2SInvitePartyMember.class,
+            C2SPartyInviteResponse.class,
+            C2SKickPartyMember.class,
+            C2STransferPartyOwnership.class,
+            C2SPartyLeave.class,
+            C2SPartyDisband.class,
+            C2SPartyPlayUpdate.class,
+
             // Server-to-Client
             S2CDisconnected.class,
             S2CConnected.class,
@@ -80,7 +91,22 @@ public class Packets {
             S2CFriendLeaved.class,
             S2CRespondFriendRequestResult.class,
             S2CFriendStatusUpdate.class,
-            S2CIncomingFriendRequestRejected.class
+            S2CIncomingFriendRequestRejected.class,
+
+            S2CCreatePartyResult.class,
+            S2CInvitePartyMemberResult.class,
+            S2CNewPartyMemberInvite.class,
+            S2CPartyInviteDeclined.class,
+            S2CPartyMemberJoined.class,
+            S2CPartyMemberLeaved.class,
+            S2CPartyKicked.class,
+            S2CPartyInviteReceived.class,
+            S2CPartyInviteRevoked.class,
+            S2CPartyInviteResponseStatus.class,
+            S2CPartyMemberKickResult.class,
+            S2CPartyOwnerTransferred.class,
+            S2CPartyMemberPlayUpdate.class,
+            S2CPartyMemberStatusUpdate.class,
     };
 
     /**

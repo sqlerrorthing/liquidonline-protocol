@@ -1,27 +1,21 @@
-package fun.sqlerrorthing.liquidonline.packets.c2s.friends;
+package fun.sqlerrorthing.liquidonline.packets.c2s.party;
 
+import fun.sqlerrorthing.liquidonline.SharedConstants;
 import fun.sqlerrorthing.liquidonline.packets.Packet;
 import fun.sqlerrorthing.liquidonline.packets.PacketBound;
-import fun.sqlerrorthing.liquidonline.SharedConstants;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
 
-/**
- * Sends a friend request to a player
- */
 @Data
 @SuperBuilder
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @AllArgsConstructor
 @NoArgsConstructor
-public class C2SSendFriendRequest implements Packet {
-    /**
-     * Player's nickname IN THE SYSTEM, to whom to send a friend request
-     */
+public class C2SInvitePartyMember implements Packet {
     @org.jetbrains.annotations.NotNull
     @NotNull
     @Pattern(
@@ -31,7 +25,7 @@ public class C2SSendFriendRequest implements Packet {
 
     @Override
     public byte id() {
-        return 7;
+        return 23;
     }
 
     @Override
