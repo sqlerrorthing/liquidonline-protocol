@@ -73,6 +73,7 @@ public class Packets {
             C2STransferPartyOwnership.class,
             C2SPartyLeave.class,
             C2SPartyDisband.class,
+            C2SPartyPlayUpdate.class,
 
             // Server-to-Client
             S2CDisconnected.class,
@@ -104,6 +105,8 @@ public class Packets {
             S2CPartyInviteResponseStatus.class,
             S2CPartyMemberKickResult.class,
             S2CPartyOwnerTransferred.class,
+            S2CPartyMemberPlayUpdate.class,
+            S2CPartyMemberStatusUpdate.class,
     };
 
     /**
