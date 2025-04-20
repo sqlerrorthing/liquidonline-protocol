@@ -18,7 +18,7 @@ import java.time.Instant;
  * <ul>
  *     <li>If {@code online} is {@code true}, then {@code minecraftUsername} and {@code skin} must not be {@code null}.</li>
  *     <li>If {@code online} is {@code false}, then {@code lastOnline} must not be {@code null}.</li>
- *     <li>If {@code server} is not {@code null} and equals {@code "singleplayer"},
+ *     <li>If {@code server} is not {@code null} or equals {@code "singleplayer"},
  *         this indicates that the friend is playing in a local (singleplayer) world.</li>
  * </ul>
  */
@@ -72,8 +72,8 @@ public class FriendDto {
     /**
      * The server the friend is currently connected to.
      * <p>
-     *     If not {@code null} and equals {@code "singleplayer"},
-     *     the friend is playing in a local singleplayer world.
+     *     If not {@code null} or equals {@code "singleplayer"},
+     *     the friend is playing in a local singleplayer world or server.
      * </p>
      */
     @Nullable
