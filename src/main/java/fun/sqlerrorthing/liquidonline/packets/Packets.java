@@ -78,6 +78,8 @@ public class Packets {
             S2CFriendRequests.class,
             S2CFriendJoined.class,
             S2CFriendLeaved.class,
+            S2CRespondFriendRequestResult.class,
+            S2CFriendStatusUpdate.class,
     };
 
     /**
