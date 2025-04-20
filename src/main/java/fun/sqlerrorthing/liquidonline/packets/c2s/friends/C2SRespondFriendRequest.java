@@ -2,9 +2,7 @@ package fun.sqlerrorthing.liquidonline.packets.c2s.friends;
 
 import fun.sqlerrorthing.liquidonline.packets.Packet;
 import fun.sqlerrorthing.liquidonline.packets.PacketBound;
-import fun.sqlerrorthing.liquidonline.packets.SharedConstants;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
