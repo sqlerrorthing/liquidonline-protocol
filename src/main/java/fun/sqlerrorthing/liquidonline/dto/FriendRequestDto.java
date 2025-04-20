@@ -32,24 +32,4 @@ public class FriendRequestDto {
     @NotNull
     @jakarta.validation.constraints.NotNull
     String username;
-
-    /**
-     * The status of the friend request.
-     * <p>Must not be {@code null}.</p>
-     */
-    @NotNull
-    @jakarta.validation.constraints.NotNull
-    Status status;
-
-    public enum Status {
-        /**
-         * Indicates that this is an incoming friend request sent by another user.
-         */
-        INCOMING,
-        
-        /**
-         * Indicates that this is an outgoing friend request sent by the current user.
-         */
-        OUTGOING,
-    }
 }

@@ -8,6 +8,7 @@ import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -17,9 +18,21 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class S2CFriendRequests implements Packet {
+    /**
+     * All incoming friend request sent by another users.
+     */
     @NotNull
     @jakarta.validation.constraints.NotNull
-    List<FriendRequestDto> requests;
+    @Builder.Default
+    List<FriendRequestDto> incoming = new ArrayList<>();
+
+    /**
+     * All outgoing friend requests sent by the current user.
+     */
+    @NotNull
+    @jakarta.validation.constraints.NotNull
+    @Builder.Default
+    List<FriendRequestDto> outgoing = new ArrayList<>();
 
     @Override
     public byte id() {
