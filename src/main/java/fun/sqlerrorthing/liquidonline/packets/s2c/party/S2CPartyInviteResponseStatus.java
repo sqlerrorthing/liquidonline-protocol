@@ -56,7 +56,12 @@ public class S2CPartyInviteResponseStatus implements Packet {
         /**
          * The player is already in another party
          */
-        ALREADY_IN_ANOTHER_PARTY
+        ALREADY_IN_ANOTHER_PARTY,
+
+        /**
+         * The number of members in the party exceeds the limit
+         */
+        PARTY_MEMBERS_LIMIT
     }
 
     @Override
