@@ -50,7 +50,7 @@ public class S2CCreatePartyResult implements Packet {
 
     @Override
     public byte id() {
-        return 22;
+        return 24;
     }
 
     @Override
