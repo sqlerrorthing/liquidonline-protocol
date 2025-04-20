@@ -36,14 +36,14 @@ public class S2CRespondFriendRequestResult implements Packet {
     /**
      * Information about the accepted friend.
      * <p>
-     * This field is non-null only when {@code status} is {@link Status#ACCEPTED}.
+     * This field is non-null only when {@code status} is {@link Status#SUCCESS} and the friend request was {@link fun.sqlerrorthing.liquidonline.packets.c2s.friends.C2SRespondFriendRequest.Status#ACCEPTED}.
      * Otherwise, it will be {@code null}.
      */
     @Nullable
     FriendDto friend;
 
     public enum Status {
-        ACCEPTED,
+        SUCCESS,
 
         REQUEST_NOT_FOUND,
     }
