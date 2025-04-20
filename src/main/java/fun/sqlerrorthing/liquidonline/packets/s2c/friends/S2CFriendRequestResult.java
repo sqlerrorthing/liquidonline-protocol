@@ -23,6 +23,12 @@ public class S2CFriendRequestResult implements Packet {
 
     public enum Status {
         /**
+         * The user sent a friend request to someone who already has this friend request pending.
+         * Then we consider that he accepted this friend request.
+         */
+        ACCEPTED,
+
+        /**
          * The user not found
          */
         NOT_FOUND,
