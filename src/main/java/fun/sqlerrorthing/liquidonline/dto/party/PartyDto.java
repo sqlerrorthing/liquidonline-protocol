@@ -67,7 +67,7 @@ public class PartyDto {
      */
     @NotNull
     @jakarta.validation.constraints.NotNull
-    List<PartyMember> members;
+    List<PartyMemberDto> members;
 
     /**
      * A list of invited members.
@@ -85,5 +85,5 @@ public class PartyDto {
      */
     @NotNull
     @jakarta.validation.constraints.NotNull
-    List<InvitedMember> invitedMembers;
+    List<InvitedMemberDto> invitedMembers;
 }
