@@ -8,7 +8,7 @@ import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
 
 /**
- * Notifies you when you receive a new friend request
+ * Notifies when the user receive a new friend request
  */
 @Data
 @SuperBuilder
