@@ -20,6 +20,8 @@ import org.jetbrains.annotations.Nullable;
 @AllArgsConstructor
 @NoArgsConstructor
 public class S2COutgoingFriendRequest implements Packet {
+    int requestId;
+
     /**
      * To whom was it sent
      */

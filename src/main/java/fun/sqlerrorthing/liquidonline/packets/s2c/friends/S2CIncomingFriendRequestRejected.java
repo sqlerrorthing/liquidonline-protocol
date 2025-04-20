@@ -8,7 +8,7 @@ import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
 
 /**
- * An incoming friend request was revoked by the user himself
+ * An incoming friend request was revoked by the sender himself
  */
 @Data
 @SuperBuilder
