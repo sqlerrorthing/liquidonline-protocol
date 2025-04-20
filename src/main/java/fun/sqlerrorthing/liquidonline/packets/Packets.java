@@ -80,6 +80,7 @@ public class Packets {
             S2CFriendLeaved.class,
             S2CRespondFriendRequestResult.class,
             S2CFriendStatusUpdate.class,
+            S2CIncomingFriendRequestRejected.class
     };
 
     /**
