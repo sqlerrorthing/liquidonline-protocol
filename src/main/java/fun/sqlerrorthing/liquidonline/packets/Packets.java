@@ -71,6 +71,8 @@ public class Packets {
             C2SPartyInviteResponse.class,
             C2SKickPartyMember.class,
             C2STransferPartyOwnership.class,
+            C2SPartyLeave.class,
+            C2SPartyDisband.class,
 
             // Server-to-Client
             S2CDisconnected.class,
