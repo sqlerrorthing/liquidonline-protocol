@@ -18,11 +18,10 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 public class S2CFriendShipBroken implements Packet {
     /**
-     * Who did this request come from
+     * With whom friendship was destroyed
+     * Contains the id of a friend (former).
      */
-    @org.jetbrains.annotations.NotNull
-    @NotNull
-    String with;
+    int with;
 
     @Override
     public byte id() {

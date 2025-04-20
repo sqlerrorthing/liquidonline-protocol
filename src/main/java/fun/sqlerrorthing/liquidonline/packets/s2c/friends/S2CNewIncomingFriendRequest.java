@@ -24,6 +24,8 @@ public class S2CNewIncomingFriendRequest implements Packet {
     @NotNull
     String from;
 
+    int requestId;
+
     @Override
     public byte id() {
         return 10;

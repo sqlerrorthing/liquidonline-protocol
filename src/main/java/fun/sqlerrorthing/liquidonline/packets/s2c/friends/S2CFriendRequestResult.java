@@ -6,6 +6,7 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Response when friend request was sent
@@ -20,6 +21,9 @@ public class S2CFriendRequestResult implements Packet {
     @NotNull
     @jakarta.validation.constraints.NotNull
     Status status;
+
+    @Nullable
+    Integer requestId;
 
     public enum Status {
         /**

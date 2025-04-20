@@ -22,15 +22,7 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @NoArgsConstructor
 public class C2SRespondFriendRequest implements Packet {
-    /**
-     * Player's nickname IN THE SYSTEM, whose friend request to respond to.
-     */
-    @org.jetbrains.annotations.NotNull
-    @NotNull
-    @Pattern(
-            regexp = SharedConstants.USERNAME_PATTERN,
-            message = "The username does not validate against this regular expression: " + SharedConstants.USERNAME_PATTERN
-    ) String username;
+    int requestId;
 
     /**
      * Reply status
