@@ -107,6 +107,7 @@ public class Packets {
             S2CPartyOwnerTransferred.class,
             S2CPartyMemberPlayUpdate.class,
             S2CPartyMemberStatusUpdate.class,
+            S2CPartySync.class,
     };
 
     /**
