@@ -45,17 +45,22 @@ public class S2CInvitePartyMemberResult implements Packet {
         /**
          * The user attempting to send the invite is not part of any party.
          */
-        SELF_NOT_IN_A_PARTY,
+        NOT_IN_A_PARTY,
 
         /**
-         * The user attempting to send the invite is already at a party and cannot send invites.
+         * The user attempting to send the invite to person who is already in the same party.
          */
-        ALREADY_AT_A_PARTY,
+        ALREADY_IN_A_PARTY,
 
         /**
          * The user attempting to send the invite does not have the necessary permissions.
          */
-        NOT_ENOUGH_RIGHTS
+        NOT_ENOUGH_RIGHTS,
+
+        /**
+         * The receiver doesn't online or not sender's friend
+         */
+        NOT_FOUND
     }
 
     @Override
