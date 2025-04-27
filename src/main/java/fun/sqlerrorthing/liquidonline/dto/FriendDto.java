@@ -67,13 +67,11 @@ public class FriendDto {
      * The friend's Minecraft skin.
      * <p>
      *     Must not be {@code null} if {@code online} is {@code true}.
-     *     This is a Base64-encoded string representing a 16x16 PNG image
-     *     of the friend's Minecraft character head.
+     *     A 16x16 pixel PNG image of the player's head skin.
      * </p>
      */
     @SerializedName("e")
-    @Nullable
-    String skin;
+    byte @NotNull [] skin;
 
     /**
      * The server the friend is currently connected to.

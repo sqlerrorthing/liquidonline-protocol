@@ -59,14 +59,12 @@ public class PartyMemberDto {
     /**
      * The player’s head skin image.
      * <p>
-     *     This field contains a 16x16 pixel PNG image of the player's head skin,
-     *     encoded as a Base64 string.
+     *     This field contains a 16x16 pixel PNG image of the player's head skin.
      * </p>
      */
     @SerializedName("d")
-    @NotNull
     @jakarta.validation.constraints.NotNull
-    String skin;
+    byte @NotNull [] skin;
 
     /**
      * The color assigned to this party member.

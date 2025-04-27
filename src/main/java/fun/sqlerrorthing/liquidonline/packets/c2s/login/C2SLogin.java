@@ -58,12 +58,10 @@ public final class C2SLogin implements Packet {
 
     /**
      * Player head skin image 16x16.
-     * In png format encoded in base64.
      */
     @SerializedName("d")
     @NotNull
-    @org.jetbrains.annotations.NotNull
-    String skin;
+    byte @NotNull @org.jetbrains.annotations.NotNull [] skin;
 
     @Override
     public byte id() {

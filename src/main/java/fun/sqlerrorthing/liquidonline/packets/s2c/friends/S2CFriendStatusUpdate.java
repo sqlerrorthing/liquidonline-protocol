@@ -51,13 +51,12 @@ public class S2CFriendStatusUpdate implements Packet {
     String minecraftUsername;
 
     /**
-     * The updated skin image of the friend, represented as a base64-encoded PNG image.
+     * The updated skin image of the friend.
      * The image is a 16x16 pixel head texture.
      * Will be non-null if the skin was changed; otherwise {@code null}.
      */
     @SerializedName("c")
-    @Nullable
-    String skin;
+    byte @Nullable [] skin;
 
     /**
      * The updated server name where the friend is currently playing.

@@ -45,11 +45,10 @@ public class S2CPartyMemberStatusUpdate implements Packet {
     String minecraftUsername;
 
     /**
-     * The updated base64-encoded PNG string of the member's head skin (16x16), or {@code null} if it hasn't changed.
+     * The updated PNG of the member's head skin (16x16), or {@code null} if it hasn't changed.
      */
     @SerializedName("c")
-    @Nullable
-    String skin;
+    byte @Nullable [] skin;
 
     @Override
     public byte id() {

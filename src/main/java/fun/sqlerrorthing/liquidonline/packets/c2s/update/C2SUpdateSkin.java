@@ -20,12 +20,10 @@ import lombok.experimental.SuperBuilder;
 public class C2SUpdateSkin implements Packet {
     /**
      * Player head skin image 16x16.
-     * In png format encoded in base64.
      */
     @SerializedName("s")
     @NotNull
-    @org.jetbrains.annotations.NotNull
-    String skin;
+    byte @NotNull @org.jetbrains.annotations.NotNull[] skin;
 
     @Override
     public byte id() {
