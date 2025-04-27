@@ -1,5 +1,6 @@
 package fun.sqlerrorthing.liquidonline.dto;
 
+import fun.sqlerrorthing.liquidonline.packets.SerializedName;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
@@ -12,8 +13,10 @@ import org.jetbrains.annotations.NotNull;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserAccountDto {
+    @SerializedName("i")
     int id;
 
+    @SerializedName("u")
     @NotNull
     String username;
 }

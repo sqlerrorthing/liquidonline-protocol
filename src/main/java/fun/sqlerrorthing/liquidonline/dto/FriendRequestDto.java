@@ -1,5 +1,6 @@
 package fun.sqlerrorthing.liquidonline.dto;
 
+import fun.sqlerrorthing.liquidonline.packets.SerializedName;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
@@ -23,12 +24,14 @@ public class FriendRequestDto {
      * The id of the request.
      * <p>Must not be {@code null}.</p>
      */
+    @SerializedName("i")
     int requestId;
 
     /**
      * The username of the user associated with this friend request.
      * <p>Must not be {@code null}.</p>
      */
+    @SerializedName("u")
     @NotNull
     @jakarta.validation.constraints.NotNull
     String username;

@@ -1,8 +1,8 @@
 package fun.sqlerrorthing.liquidonline.packets.s2c.login;
 
-import fun.sqlerrorthing.liquidonline.dto.UserAccountDto;
 import fun.sqlerrorthing.liquidonline.packets.Packet;
 import fun.sqlerrorthing.liquidonline.packets.PacketBound;
+import fun.sqlerrorthing.liquidonline.packets.SerializedName;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
@@ -10,7 +10,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * The packet is sent when the error {@link jakarta.validation.ConstraintViolationException} appears
@@ -29,6 +28,7 @@ public final class S2CValidationFailure implements Packet {
      */
     @NotNull
     @jakarta.validation.constraints.NotNull
+    @SerializedName("d")
     List<FailureDetail> details;
 
     @Data
@@ -38,8 +38,13 @@ public final class S2CValidationFailure implements Packet {
     @AllArgsConstructor
     @NoArgsConstructor
     public final static class FailureDetail {
-        @Nullable String path;
-        @NotNull String message;
+        @SerializedName("p")
+        @Nullable
+        String path;
+
+        @SerializedName("m")
+        @NotNull
+        String message;
     }
 
     @Override

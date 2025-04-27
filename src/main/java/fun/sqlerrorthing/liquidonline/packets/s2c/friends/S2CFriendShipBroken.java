@@ -2,7 +2,7 @@ package fun.sqlerrorthing.liquidonline.packets.s2c.friends;
 
 import fun.sqlerrorthing.liquidonline.packets.Packet;
 import fun.sqlerrorthing.liquidonline.packets.PacketBound;
-import jakarta.validation.constraints.NotNull;
+import fun.sqlerrorthing.liquidonline.packets.SerializedName;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
@@ -21,6 +21,7 @@ public class S2CFriendShipBroken implements Packet {
      * With whom friendship was destroyed
      * Contains the id of a friend (former).
      */
+    @SerializedName("i")
     int with;
 
     @Override

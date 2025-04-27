@@ -2,6 +2,7 @@ package fun.sqlerrorthing.liquidonline.packets.c2s.party;
 
 import fun.sqlerrorthing.liquidonline.packets.Packet;
 import fun.sqlerrorthing.liquidonline.packets.PacketBound;
+import fun.sqlerrorthing.liquidonline.packets.SerializedName;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
@@ -20,6 +21,7 @@ public class C2SKickPartyMember implements Packet {
     /**
      * The unique ID of the member to be kicked.
      */
+    @SerializedName("i")
     int memberId;
 
     @Override

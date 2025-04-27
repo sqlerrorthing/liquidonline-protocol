@@ -4,6 +4,7 @@ import fun.sqlerrorthing.liquidonline.SharedConstants;
 import fun.sqlerrorthing.liquidonline.dto.play.PlayDto;
 import fun.sqlerrorthing.liquidonline.packets.Packet;
 import fun.sqlerrorthing.liquidonline.packets.PacketBound;
+import fun.sqlerrorthing.liquidonline.packets.SerializedName;
 import jakarta.validation.constraints.Pattern;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -24,6 +25,7 @@ public class C2SCreateParty implements Packet {
     /**
      * The name of the party to be created.
      */
+    @SerializedName("n")
     @NotNull
     @jakarta.validation.constraints.NotNull
     @Pattern(
@@ -34,6 +36,7 @@ public class C2SCreateParty implements Packet {
     /**
      * Immediate information about the party owner
      */
+    @SerializedName("p")
     @Nullable
     PlayDto playData;
 

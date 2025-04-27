@@ -2,6 +2,7 @@ package fun.sqlerrorthing.liquidonline.packets.c2s.friends;
 
 import fun.sqlerrorthing.liquidonline.packets.Packet;
 import fun.sqlerrorthing.liquidonline.packets.PacketBound;
+import fun.sqlerrorthing.liquidonline.packets.SerializedName;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -20,11 +21,13 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @NoArgsConstructor
 public class C2SRespondFriendRequest implements Packet {
+    @SerializedName("r")
     int requestId;
 
     /**
      * Reply status
      */
+    @SerializedName("s")
     @org.jetbrains.annotations.NotNull
     @NotNull
     Status status;
@@ -33,11 +36,13 @@ public class C2SRespondFriendRequest implements Packet {
         /**
          * Friend request accepted
          */
+        @SerializedName("a")
         ACCEPTED,
 
         /**
          * Friend request rejected
          */
+        @SerializedName("r")
         REJECT,
     }
 

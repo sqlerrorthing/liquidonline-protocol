@@ -1,6 +1,7 @@
 package fun.sqlerrorthing.liquidonline.dto.party;
 
 import fun.sqlerrorthing.liquidonline.dto.play.PlayDto;
+import fun.sqlerrorthing.liquidonline.packets.SerializedName;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
@@ -30,6 +31,7 @@ public class PartyMemberDto {
      *     A separate party-specific member ID is not allocated.
      * </p>
      */
+    @SerializedName("a")
     int memberId;
 
     /**
@@ -38,6 +40,7 @@ public class PartyMemberDto {
      *     This is the name visible to other members inside the party.
      * </p>
      */
+    @SerializedName("b")
     @NotNull
     @jakarta.validation.constraints.NotNull
     String username;
@@ -48,6 +51,7 @@ public class PartyMemberDto {
      *     This is the name used by the player in the Minecraft environment.
      * </p>
      */
+    @SerializedName("c")
     @NotNull
     @jakarta.validation.constraints.NotNull
     String minecraftUsername;
@@ -59,6 +63,7 @@ public class PartyMemberDto {
      *     encoded as a Base64 string.
      * </p>
      */
+    @SerializedName("d")
     @NotNull
     @jakarta.validation.constraints.NotNull
     String skin;
@@ -69,6 +74,7 @@ public class PartyMemberDto {
      *     This color can be used to visually distinguish the player in the party UI or in-game.
      * </p>
      */
+    @SerializedName("e")
     @NotNull
     @jakarta.validation.constraints.NotNull
     Color color;
@@ -80,6 +86,7 @@ public class PartyMemberDto {
      *     If the player is offline or not in-game, this value is {@code null}.
      * </p>
      */
+    @SerializedName("f")
     @Nullable
     PlayDto playData;
 }

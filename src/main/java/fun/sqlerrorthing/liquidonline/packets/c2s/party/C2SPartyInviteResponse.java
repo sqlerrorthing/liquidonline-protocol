@@ -3,6 +3,7 @@ package fun.sqlerrorthing.liquidonline.packets.c2s.party;
 import fun.sqlerrorthing.liquidonline.dto.play.PlayDto;
 import fun.sqlerrorthing.liquidonline.packets.Packet;
 import fun.sqlerrorthing.liquidonline.packets.PacketBound;
+import fun.sqlerrorthing.liquidonline.packets.SerializedName;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
@@ -25,6 +26,7 @@ public class C2SPartyInviteResponse implements Packet {
     /**
      * The unique identifier of the invite.
      */
+    @SerializedName("i")
     @NotNull
     @jakarta.validation.constraints.NotNull
     UUID inviteUuid;
@@ -32,6 +34,7 @@ public class C2SPartyInviteResponse implements Packet {
     /**
      * The response to the party invite.
      */
+    @SerializedName("r")
     @NotNull
     @jakarta.validation.constraints.NotNull
     Response response;
@@ -40,6 +43,7 @@ public class C2SPartyInviteResponse implements Packet {
      * If the invite was accepted, you need to provide up-to-date information about yourself.
      * Or leave null if there is none.
      */
+    @SerializedName("p")
     @Nullable
     PlayDto play;
 
@@ -47,11 +51,13 @@ public class C2SPartyInviteResponse implements Packet {
         /**
          * The invite was accepted
          */
+        @SerializedName("a")
         ACCEPTED,
 
         /**
          * The invite was declined
          */
+        @SerializedName("d")
         DECLINED,
     }
 

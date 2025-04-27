@@ -2,6 +2,7 @@ package fun.sqlerrorthing.liquidonline.packets.s2c.friends;
 
 import fun.sqlerrorthing.liquidonline.packets.Packet;
 import fun.sqlerrorthing.liquidonline.packets.PacketBound;
+import fun.sqlerrorthing.liquidonline.packets.SerializedName;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
@@ -17,6 +18,7 @@ import org.jetbrains.annotations.NotNull;
 @AllArgsConstructor
 @NoArgsConstructor
 public class S2CStopBeingFriendsResult implements Packet {
+    @SerializedName("s")
     @NotNull
     @jakarta.validation.constraints.NotNull
     Status status;
@@ -25,11 +27,13 @@ public class S2CStopBeingFriendsResult implements Packet {
         /**
          * Friendship is over
          */
+        @SerializedName("a")
         SUCCESS,
 
         /**
          * There was no friendship between the said player
          */
+        @SerializedName("b")
         WAS_NO_FRIENDSHIP
     }
 

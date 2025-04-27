@@ -3,7 +3,7 @@ package fun.sqlerrorthing.liquidonline.packets.s2c.friends;
 import fun.sqlerrorthing.liquidonline.dto.FriendDto;
 import fun.sqlerrorthing.liquidonline.packets.Packet;
 import fun.sqlerrorthing.liquidonline.packets.PacketBound;
-import fun.sqlerrorthing.liquidonline.packets.c2s.friends.C2SRespondFriendRequest;
+import fun.sqlerrorthing.liquidonline.packets.SerializedName;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -20,11 +20,13 @@ import org.jetbrains.annotations.Nullable;
 @AllArgsConstructor
 @NoArgsConstructor
 public class S2COutgoingFriendRequest implements Packet {
+    @SerializedName("i")
     int requestId;
 
     /**
      * To whom was it sent
      */
+    @SerializedName("t")
     @org.jetbrains.annotations.NotNull
     @NotNull
     String to;
@@ -32,6 +34,7 @@ public class S2COutgoingFriendRequest implements Packet {
     /**
      * Reply status
      */
+    @SerializedName("s")
     @org.jetbrains.annotations.NotNull
     @NotNull
     Status status;
@@ -39,6 +42,7 @@ public class S2COutgoingFriendRequest implements Packet {
     /**
      * Will not be null if the status is {@link S2COutgoingFriendRequest#status} {@link Status#ACCEPTED}
      */
+    @SerializedName("f")
     @Nullable
     FriendDto friend;
 
@@ -46,11 +50,13 @@ public class S2COutgoingFriendRequest implements Packet {
         /**
          * Friend request accepted
          */
+        @SerializedName("a")
         ACCEPTED,
 
         /**
          * Friend request rejected
          */
+        @SerializedName("c")
         REJECT,
     }
 

@@ -2,6 +2,7 @@ package fun.sqlerrorthing.liquidonline.packets.s2c.friends;
 
 import fun.sqlerrorthing.liquidonline.packets.Packet;
 import fun.sqlerrorthing.liquidonline.packets.PacketBound;
+import fun.sqlerrorthing.liquidonline.packets.SerializedName;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -20,10 +21,12 @@ public class S2CNewIncomingFriendRequest implements Packet {
     /**
      * Who did this request come from
      */
+    @SerializedName("f")
     @org.jetbrains.annotations.NotNull
     @NotNull
     String from;
 
+    @SerializedName("i")
     int requestId;
 
     @Override

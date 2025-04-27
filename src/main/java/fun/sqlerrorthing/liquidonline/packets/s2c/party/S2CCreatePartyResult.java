@@ -3,6 +3,7 @@ package fun.sqlerrorthing.liquidonline.packets.s2c.party;
 import fun.sqlerrorthing.liquidonline.dto.party.PartyDto;
 import fun.sqlerrorthing.liquidonline.packets.Packet;
 import fun.sqlerrorthing.liquidonline.packets.PacketBound;
+import fun.sqlerrorthing.liquidonline.packets.SerializedName;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
@@ -22,6 +23,7 @@ public class S2CCreatePartyResult implements Packet {
     /**
      * The result of the party creation request.
      */
+    @SerializedName("r")
     @NotNull
     @jakarta.validation.constraints.NotNull
     Result result;
@@ -33,6 +35,7 @@ public class S2CCreatePartyResult implements Packet {
      *     If the result is {@link Result#ALREADY_IN_PARTY}, this field will be {@code null}.
      * </p>
      */
+    @SerializedName("p")
     @Nullable
     PartyDto party;
 
@@ -40,11 +43,13 @@ public class S2CCreatePartyResult implements Packet {
         /**
          * The party was successfully created.
          */
+        @SerializedName("a")
         CREATED,
 
         /**
          * The user is already part of a party and cannot create a new one.
          */
+        @SerializedName("b")
         ALREADY_IN_PARTY
     }
 

@@ -2,6 +2,7 @@ package fun.sqlerrorthing.liquidonline.packets.s2c.party;
 
 import fun.sqlerrorthing.liquidonline.packets.Packet;
 import fun.sqlerrorthing.liquidonline.packets.PacketBound;
+import fun.sqlerrorthing.liquidonline.packets.SerializedName;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
@@ -22,6 +23,7 @@ public class S2CPartyInviteRevoked implements Packet {
     /**
      * The unique identifier of the revoked invite.
      */
+    @SerializedName("i")
     UUID inviteUuid;
 
     @Override

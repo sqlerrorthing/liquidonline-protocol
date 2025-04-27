@@ -3,6 +3,7 @@ package fun.sqlerrorthing.liquidonline.packets.s2c.friends;
 import fun.sqlerrorthing.liquidonline.dto.FriendDto;
 import fun.sqlerrorthing.liquidonline.packets.Packet;
 import fun.sqlerrorthing.liquidonline.packets.PacketBound;
+import fun.sqlerrorthing.liquidonline.packets.SerializedName;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
@@ -29,6 +30,7 @@ public class S2CRespondFriendRequestResult implements Packet {
     /**
      * The result status of the friend request response operation.
      */
+    @SerializedName("s")
     @NotNull
     @jakarta.validation.constraints.NotNull
     Status status;
@@ -39,12 +41,15 @@ public class S2CRespondFriendRequestResult implements Packet {
      * This field is non-null only when {@code status} is {@link Status#SUCCESS} and the friend request was {@link fun.sqlerrorthing.liquidonline.packets.c2s.friends.C2SRespondFriendRequest.Status#ACCEPTED}.
      * Otherwise, it will be {@code null}.
      */
+    @SerializedName("f")
     @Nullable
     FriendDto friend;
 
     public enum Status {
+        @SerializedName("s")
         SUCCESS,
 
+        @SerializedName("n")
         REQUEST_NOT_FOUND,
     }
 

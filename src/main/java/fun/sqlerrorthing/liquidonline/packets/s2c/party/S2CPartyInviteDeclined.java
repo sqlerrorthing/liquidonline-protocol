@@ -3,6 +3,7 @@ package fun.sqlerrorthing.liquidonline.packets.s2c.party;
 import fun.sqlerrorthing.liquidonline.dto.party.InvitedMemberDto;
 import fun.sqlerrorthing.liquidonline.packets.Packet;
 import fun.sqlerrorthing.liquidonline.packets.PacketBound;
+import fun.sqlerrorthing.liquidonline.packets.SerializedName;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
@@ -27,6 +28,7 @@ public class S2CPartyInviteDeclined implements Packet {
      * The details of the invited player who has declined the invitation.
      * </p>
      */
+    @SerializedName("i")
     @NotNull
     @jakarta.validation.constraints.NotNull
     InvitedMemberDto invitedMember;

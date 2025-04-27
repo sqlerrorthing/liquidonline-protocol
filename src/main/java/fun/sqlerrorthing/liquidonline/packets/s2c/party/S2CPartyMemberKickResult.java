@@ -2,6 +2,7 @@ package fun.sqlerrorthing.liquidonline.packets.s2c.party;
 
 import fun.sqlerrorthing.liquidonline.packets.Packet;
 import fun.sqlerrorthing.liquidonline.packets.PacketBound;
+import fun.sqlerrorthing.liquidonline.packets.SerializedName;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
@@ -20,6 +21,7 @@ public class S2CPartyMemberKickResult implements Packet {
     /**
      * The result of the kick action.
      */
+    @SerializedName("r")
     @NotNull
     @jakarta.validation.constraints.NotNull
     Result result;
@@ -28,16 +30,19 @@ public class S2CPartyMemberKickResult implements Packet {
         /**
          * The player was successfully kicked from the party
          */
+        @SerializedName("a")
         KICKED,
 
         /**
          * The requester lacked the rights to kick the player
          */
+        @SerializedName("b")
         NO_ENOUGH_RIGHTS,
 
         /**
          * The player was not found or is not in the party
          */
+        @SerializedName("c")
         NOT_FOUND
     }
 

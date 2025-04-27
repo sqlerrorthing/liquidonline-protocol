@@ -3,12 +3,16 @@ package fun.sqlerrorthing.liquidonline.packets.c2s.party;
 import fun.sqlerrorthing.liquidonline.SharedConstants;
 import fun.sqlerrorthing.liquidonline.packets.Packet;
 import fun.sqlerrorthing.liquidonline.packets.PacketBound;
+import fun.sqlerrorthing.liquidonline.packets.SerializedName;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
 
+/**
+ * Packet sent by a party member to invite another player to the party.
+ */
 @Data
 @SuperBuilder
 @Builder
@@ -16,6 +20,7 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @NoArgsConstructor
 public class C2SInvitePartyMember implements Packet {
+    @SerializedName("u")
     @org.jetbrains.annotations.NotNull
     @NotNull
     @Pattern(

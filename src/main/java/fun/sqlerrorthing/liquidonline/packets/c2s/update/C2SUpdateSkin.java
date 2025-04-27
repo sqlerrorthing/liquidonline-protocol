@@ -2,6 +2,7 @@ package fun.sqlerrorthing.liquidonline.packets.c2s.update;
 
 import fun.sqlerrorthing.liquidonline.packets.Packet;
 import fun.sqlerrorthing.liquidonline.packets.PacketBound;
+import fun.sqlerrorthing.liquidonline.packets.SerializedName;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -21,6 +22,7 @@ public class C2SUpdateSkin implements Packet {
      * Player head skin image 16x16.
      * In png format encoded in base64.
      */
+    @SerializedName("s")
     @NotNull
     @org.jetbrains.annotations.NotNull
     String skin;

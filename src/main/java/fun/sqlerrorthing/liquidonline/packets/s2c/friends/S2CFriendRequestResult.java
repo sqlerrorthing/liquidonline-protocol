@@ -2,6 +2,7 @@ package fun.sqlerrorthing.liquidonline.packets.s2c.friends;
 
 import fun.sqlerrorthing.liquidonline.packets.Packet;
 import fun.sqlerrorthing.liquidonline.packets.PacketBound;
+import fun.sqlerrorthing.liquidonline.packets.SerializedName;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
@@ -18,10 +19,12 @@ import org.jetbrains.annotations.Nullable;
 @AllArgsConstructor
 @NoArgsConstructor
 public class S2CFriendRequestResult implements Packet {
+    @SerializedName("s")
     @NotNull
     @jakarta.validation.constraints.NotNull
     Status status;
 
+    @SerializedName("9")
     @Nullable
     Integer requestId;
 
@@ -30,31 +33,37 @@ public class S2CFriendRequestResult implements Packet {
          * The user sent a friend request to someone who already has this friend request pending.
          * Then we consider that he accepted this friend request.
          */
+        @SerializedName("a")
         ACCEPTED,
 
         /**
          * The user not found
          */
+        @SerializedName("b")
         NOT_FOUND,
 
         /**
          * Friend request successfully sent
          */
+        @SerializedName("c")
         REQUESTED,
 
         /**
          * Friend request already sent
          */
+        @SerializedName("d")
         ALREADY_REQUESTED,
 
         /**
          * This player is already friends with this player
          */
+        @SerializedName("e")
         ALREADY_FRIENDS,
 
         /**
          * The request sent to self
          */
+        @SerializedName("f")
         SENT_TO_SELF
     }
 

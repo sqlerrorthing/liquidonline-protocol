@@ -1,8 +1,8 @@
 package fun.sqlerrorthing.liquidonline.packets.s2c.party;
 
-import fun.sqlerrorthing.liquidonline.dto.party.InvitedMemberDto;
 import fun.sqlerrorthing.liquidonline.packets.Packet;
 import fun.sqlerrorthing.liquidonline.packets.PacketBound;
+import fun.sqlerrorthing.liquidonline.packets.SerializedName;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
@@ -26,6 +26,7 @@ public class S2CPartyInviteReceived implements Packet {
      *     This UUID is used to identify the invite, and is necessary for accepting or declining the invite.
      * </p>
      */
+    @SerializedName("i")
     @NotNull
     @jakarta.validation.constraints.NotNull
     UUID inviteUuid;
@@ -36,6 +37,7 @@ public class S2CPartyInviteReceived implements Packet {
      *     This is the name of the party to which the player is invited.
      * </p>
      */
+    @SerializedName("p")
     @NotNull
     @jakarta.validation.constraints.NotNull
     String partyName;

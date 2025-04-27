@@ -3,6 +3,7 @@ package fun.sqlerrorthing.liquidonline.packets.s2c.friends;
 import fun.sqlerrorthing.liquidonline.dto.FriendRequestDto;
 import fun.sqlerrorthing.liquidonline.packets.Packet;
 import fun.sqlerrorthing.liquidonline.packets.PacketBound;
+import fun.sqlerrorthing.liquidonline.packets.SerializedName;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
@@ -21,6 +22,7 @@ public class S2CFriendRequests implements Packet {
     /**
      * All incoming friend request sent by another users.
      */
+    @SerializedName("i")
     @NotNull
     @jakarta.validation.constraints.NotNull
     @Builder.Default
@@ -29,6 +31,7 @@ public class S2CFriendRequests implements Packet {
     /**
      * All outgoing friend requests sent by the current user.
      */
+    @SerializedName("o")
     @NotNull
     @jakarta.validation.constraints.NotNull
     @Builder.Default

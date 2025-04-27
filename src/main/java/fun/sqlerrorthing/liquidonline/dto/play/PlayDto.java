@@ -1,5 +1,6 @@
 package fun.sqlerrorthing.liquidonline.dto.play;
 
+import fun.sqlerrorthing.liquidonline.packets.SerializedName;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
@@ -25,6 +26,7 @@ public class PlayDto {
      *     This ID represents the player entity within the current world instance.
      * </p>
      */
+    @SerializedName("a")
     int entityId;
 
     /**
@@ -33,6 +35,7 @@ public class PlayDto {
      *     This value represents the name of the Minecraft dimension.
      * </p>
      */
+    @SerializedName("b")
     @NotNull
     @jakarta.validation.constraints.NotNull
     String dimension;
@@ -44,6 +47,7 @@ public class PlayDto {
      *     Otherwise, it holds the IP address of the multiplayer server.
      * </p>
      */
+    @SerializedName("c")
     @NotNull
     @jakarta.validation.constraints.NotNull
     String server;
@@ -51,6 +55,7 @@ public class PlayDto {
     /**
      * The player's current health status.
      */
+    @SerializedName("d")
     @NotNull
     @jakarta.validation.constraints.NotNull
     HealthDto health;
@@ -58,6 +63,7 @@ public class PlayDto {
     /**
      * The player's current position in the game world.
      */
+    @SerializedName("e")
     @NotNull
     @jakarta.validation.constraints.NotNull
     PositionDto position;
@@ -65,6 +71,7 @@ public class PlayDto {
     /**
      * The player's current rotation in the game world.
      */
+    @SerializedName("f")
     @NotNull
     @jakarta.validation.constraints.NotNull
     RotationDto rotation;

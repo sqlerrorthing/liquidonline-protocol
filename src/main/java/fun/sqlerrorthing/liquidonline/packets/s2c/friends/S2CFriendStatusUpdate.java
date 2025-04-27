@@ -2,6 +2,7 @@ package fun.sqlerrorthing.liquidonline.packets.s2c.friends;
 
 import fun.sqlerrorthing.liquidonline.packets.Packet;
 import fun.sqlerrorthing.liquidonline.packets.PacketBound;
+import fun.sqlerrorthing.liquidonline.packets.SerializedName;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
@@ -30,12 +31,14 @@ public class S2CFriendStatusUpdate implements Packet {
      * The unique identifier of the friend whose information was updated.
      * This value is always present.
      */
+    @SerializedName("i")
     int friendId;
 
     /**
      * The updated username of the friend.
      * Will be non-null if the username was changed; otherwise {@code null}.
      */
+    @SerializedName("a")
     @Nullable
     String username;
 
@@ -43,6 +46,7 @@ public class S2CFriendStatusUpdate implements Packet {
      * The updated Minecraft username of the friend.
      * Will be non-null if the Minecraft username was changed; otherwise {@code null}.
      */
+    @SerializedName("b")
     @Nullable
     String minecraftUsername;
 
@@ -51,6 +55,7 @@ public class S2CFriendStatusUpdate implements Packet {
      * The image is a 16x16 pixel head texture.
      * Will be non-null if the skin was changed; otherwise {@code null}.
      */
+    @SerializedName("c")
     @Nullable
     String skin;
 
@@ -61,6 +66,7 @@ public class S2CFriendStatusUpdate implements Packet {
      * </p>
      * Will be non-null if the server information was changed; otherwise {@code null}.
      */
+    @SerializedName("d")
     @Nullable
     String server;
 

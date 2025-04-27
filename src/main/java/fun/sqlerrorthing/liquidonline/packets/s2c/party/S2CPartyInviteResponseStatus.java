@@ -4,7 +4,7 @@ package fun.sqlerrorthing.liquidonline.packets.s2c.party;
 import fun.sqlerrorthing.liquidonline.dto.party.PartyDto;
 import fun.sqlerrorthing.liquidonline.packets.Packet;
 import fun.sqlerrorthing.liquidonline.packets.PacketBound;
-import fun.sqlerrorthing.liquidonline.packets.c2s.party.C2SPartyInviteResponse;
+import fun.sqlerrorthing.liquidonline.packets.SerializedName;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
@@ -29,6 +29,7 @@ public class S2CPartyInviteResponseStatus implements Packet {
     /**
      * The result of the invite response.
      */
+    @SerializedName("r")
     @NotNull
     @jakarta.validation.constraints.NotNull
     Result result;
@@ -39,6 +40,7 @@ public class S2CPartyInviteResponseStatus implements Packet {
      * If the {@code result} is {@code SUCCESS} and invite was accepted, this field contains the details of the party the player was invited to.
      * </p>
      */
+    @SerializedName("p")
     @Nullable
     PartyDto party;
 
@@ -46,21 +48,25 @@ public class S2CPartyInviteResponseStatus implements Packet {
         /**
          * The player successfully accepted the invite and party details are included
          */
+        @SerializedName("a")
         SUCCESS,
 
         /**
          * The invite was not found
          */
+        @SerializedName("b")
         INVITE_NOT_FOUND,
 
         /**
          * The player is already in another party
          */
+        @SerializedName("c")
         ALREADY_IN_ANOTHER_PARTY,
 
         /**
          * The number of members in the party exceeds the limit
          */
+        @SerializedName("d")
         PARTY_MEMBERS_LIMIT
     }
 

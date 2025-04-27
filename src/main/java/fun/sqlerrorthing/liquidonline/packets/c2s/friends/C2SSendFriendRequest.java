@@ -1,8 +1,9 @@
 package fun.sqlerrorthing.liquidonline.packets.c2s.friends;
 
+import fun.sqlerrorthing.liquidonline.SharedConstants;
 import fun.sqlerrorthing.liquidonline.packets.Packet;
 import fun.sqlerrorthing.liquidonline.packets.PacketBound;
-import fun.sqlerrorthing.liquidonline.SharedConstants;
+import fun.sqlerrorthing.liquidonline.packets.SerializedName;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.*;
@@ -22,6 +23,7 @@ public class C2SSendFriendRequest implements Packet {
     /**
      * Player's nickname IN THE SYSTEM, to whom to send a friend request
      */
+    @SerializedName("u")
     @org.jetbrains.annotations.NotNull
     @NotNull
     @Pattern(

@@ -3,6 +3,7 @@ package fun.sqlerrorthing.liquidonline.packets.s2c.login;
 import fun.sqlerrorthing.liquidonline.dto.UserAccountDto;
 import fun.sqlerrorthing.liquidonline.packets.Packet;
 import fun.sqlerrorthing.liquidonline.packets.PacketBound;
+import fun.sqlerrorthing.liquidonline.packets.SerializedName;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -28,6 +29,7 @@ public final class S2CConnected implements Packet {
      * The user account
      * Cannot be {@code null}.
      */
+    @SerializedName("a")
     @NotNull
     @org.jetbrains.annotations.Nullable
     UserAccountDto account;

@@ -1,5 +1,6 @@
 package fun.sqlerrorthing.liquidonline.dto.party;
 
+import fun.sqlerrorthing.liquidonline.packets.SerializedName;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
@@ -21,6 +22,7 @@ public class PartyDto {
     /**
      * The unique identifier for the party.
      */
+    @SerializedName("a")
     @NotNull
     @jakarta.validation.constraints.NotNull
     UUID id;
@@ -31,6 +33,7 @@ public class PartyDto {
      *     This is the display name of the party, which can be seen by its members and invited members
      * </p>
      */
+    @SerializedName("b")
     @NotNull
     @jakarta.validation.constraints.NotNull
     String name;
@@ -42,6 +45,7 @@ public class PartyDto {
      *     only the owner can invite new members.
      * </p>
      */
+    @SerializedName("c")
     boolean partyPublic;
 
     /**
@@ -51,6 +55,7 @@ public class PartyDto {
      *     such as the ability to control the invitation of new members if the party is private.
      * </p>
      */
+    @SerializedName("d")
     int ownerId;
 
     /**
@@ -65,6 +70,7 @@ public class PartyDto {
      *     </ul>
      * </p>
      */
+    @SerializedName("e")
     @NotNull
     @jakarta.validation.constraints.NotNull
     List<PartyMemberDto> members;
@@ -83,6 +89,7 @@ public class PartyDto {
      *     </ul>
      * </p>
      */
+    @SerializedName("f")
     @NotNull
     @jakarta.validation.constraints.NotNull
     List<InvitedMemberDto> invitedMembers;

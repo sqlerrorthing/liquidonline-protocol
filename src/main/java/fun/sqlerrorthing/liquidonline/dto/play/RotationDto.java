@@ -1,5 +1,6 @@
 package fun.sqlerrorthing.liquidonline.dto.play;
 
+import fun.sqlerrorthing.liquidonline.packets.SerializedName;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
@@ -23,6 +24,7 @@ public class RotationDto {
      * Constraints:
      * {@code -180 <= yaw <= 180}
      */
+    @SerializedName("y")
     float yaw;
 
     /**
@@ -31,5 +33,6 @@ public class RotationDto {
      * Constraints:
      * {@code -90 <= pitch <= 90}
      */
+    @SerializedName("p")
     float pitch;
 }

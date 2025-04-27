@@ -1,5 +1,6 @@
 package fun.sqlerrorthing.liquidonline.dto;
 
+import fun.sqlerrorthing.liquidonline.packets.SerializedName;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
@@ -32,12 +33,14 @@ public class FriendDto {
     /**
      * The friend's id.
      */
+    @SerializedName("a")
     int id;
 
     /**
      * The friend's username.
      * <p>Must not be {@code null}.</p>
      */
+    @SerializedName("b")
     @NotNull
     @jakarta.validation.constraints.NotNull
     String username;
@@ -49,12 +52,14 @@ public class FriendDto {
      *     If {@code false}, {@code lastOnline} must be non-null.
      * </p>
      */
+    @SerializedName("c")
     boolean online;
 
     /**
      * The friend's Minecraft username.
      * <p>Must not be {@code null} if {@code online} is {@code true}.</p>
      */
+    @SerializedName("d")
     @Nullable
     String minecraftUsername;
 
@@ -66,6 +71,7 @@ public class FriendDto {
      *     of the friend's Minecraft character head.
      * </p>
      */
+    @SerializedName("e")
     @Nullable
     String skin;
 
@@ -76,6 +82,7 @@ public class FriendDto {
      *     the friend is playing in a local singleplayer world or server.
      * </p>
      */
+    @SerializedName("f")
     @Nullable
     String server;
 
@@ -83,6 +90,7 @@ public class FriendDto {
      * The timestamp of the last time the friend was online.
      * <p>Must not be {@code null} if {@code online} is {@code false}.</p>
      */
+    @SerializedName("g")
     @Nullable
     Instant lastOnline;
 }

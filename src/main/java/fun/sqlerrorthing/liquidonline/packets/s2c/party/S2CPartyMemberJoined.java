@@ -1,9 +1,9 @@
 package fun.sqlerrorthing.liquidonline.packets.s2c.party;
 
-import fun.sqlerrorthing.liquidonline.dto.party.InvitedMemberDto;
 import fun.sqlerrorthing.liquidonline.dto.party.PartyMemberDto;
 import fun.sqlerrorthing.liquidonline.packets.Packet;
 import fun.sqlerrorthing.liquidonline.packets.PacketBound;
+import fun.sqlerrorthing.liquidonline.packets.SerializedName;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
@@ -27,6 +27,10 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class S2CPartyMemberJoined implements Packet {
+    /**
+     * New party member
+     */
+    @SerializedName("m")
     @NotNull
     @jakarta.validation.constraints.NotNull
     PartyMemberDto member;
@@ -34,6 +38,7 @@ public class S2CPartyMemberJoined implements Packet {
     /**
      * Not null if the member joined by invite
      */
+    @SerializedName("i")
     @Nullable
     UUID inviteUuid;
 

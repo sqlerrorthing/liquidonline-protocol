@@ -3,6 +3,7 @@ package fun.sqlerrorthing.liquidonline.packets.s2c.party;
 import fun.sqlerrorthing.liquidonline.dto.play.PlayDto;
 import fun.sqlerrorthing.liquidonline.packets.Packet;
 import fun.sqlerrorthing.liquidonline.packets.PacketBound;
+import fun.sqlerrorthing.liquidonline.packets.SerializedName;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -17,11 +18,13 @@ public class S2CPartyMemberPlayUpdate implements Packet {
     /**
      * The ID of the party member whose play data was updated.
      */
+    @SerializedName("i")
     int memberId;
 
     /**
      * The updated play data of the party member. Can be {@code null} if the player is not currently playing.
      */
+    @SerializedName("d")
     @Nullable
     PlayDto data;
 

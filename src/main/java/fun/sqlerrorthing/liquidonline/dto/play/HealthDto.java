@@ -1,5 +1,6 @@
 package fun.sqlerrorthing.liquidonline.dto.play;
 
+import fun.sqlerrorthing.liquidonline.packets.SerializedName;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
@@ -25,6 +26,7 @@ public class HealthDto {
      *     Typically ranges from {@code 0.0f} (dead) to {@code maxHealth}.
      * </p>
      */
+    @SerializedName("a")
     float health;
 
     /**
@@ -33,6 +35,7 @@ public class HealthDto {
      *     Indicates the highest number of health points the player can have.
      * </p>
      */
+    @SerializedName("b")
     float maxHealth;
 
     /**
@@ -42,5 +45,6 @@ public class HealthDto {
      *     This can be used for invulnerability frames or damage animations.
      * </p>
      */
+    @SerializedName("c")
     float hurtTime;
 }

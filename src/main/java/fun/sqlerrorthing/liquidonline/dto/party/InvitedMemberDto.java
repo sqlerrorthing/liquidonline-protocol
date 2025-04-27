@@ -1,5 +1,6 @@
 package fun.sqlerrorthing.liquidonline.dto.party;
 
+import fun.sqlerrorthing.liquidonline.packets.SerializedName;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
@@ -24,6 +25,7 @@ public class InvitedMemberDto {
      *     It is used to track and manage individual invitations.
      * </p>
      */
+    @SerializedName("a")
     @NotNull
     @jakarta.validation.constraints.NotNull
     UUID inviteUuid;
@@ -31,6 +33,7 @@ public class InvitedMemberDto {
     /**
      * The username of the invited user.
      */
+    @SerializedName("b")
     @NotNull
     @jakarta.validation.constraints.NotNull
     String username;
@@ -42,5 +45,6 @@ public class InvitedMemberDto {
      *     who invited the member.
      * </p>
      */
+    @SerializedName("c")
     int senderId;
 }
