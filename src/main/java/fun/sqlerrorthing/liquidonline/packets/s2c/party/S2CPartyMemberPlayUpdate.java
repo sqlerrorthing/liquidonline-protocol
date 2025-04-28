@@ -4,6 +4,9 @@ import fun.sqlerrorthing.liquidonline.dto.play.PlayDto;
 import fun.sqlerrorthing.liquidonline.packets.Packet;
 import fun.sqlerrorthing.liquidonline.packets.PacketBound;
 import fun.sqlerrorthing.liquidonline.packets.SerializedName;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
+import lombok.experimental.SuperBuilder;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -14,6 +17,12 @@ import org.jetbrains.annotations.Nullable;
  * can be {@code null}.
  * </p>
  */
+@Data
+@SuperBuilder
+@Builder
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@AllArgsConstructor
+@NoArgsConstructor
 public class S2CPartyMemberPlayUpdate implements Packet {
     /**
      * The ID of the party member whose play data was updated.
