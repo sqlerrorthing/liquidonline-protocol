@@ -8,5 +8,5 @@ import java.lang.reflect.Type;
 
 public interface BufferDeserializer<T> {
     @NotNull
-    T deserialize(@NotNull ByteBufReader reader) throws IOException;
+    T deserialize(@NotNull ByteBufReader reader, @NotNull Type type) throws IOException;
 }

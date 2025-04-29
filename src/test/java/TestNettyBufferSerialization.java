@@ -5,6 +5,7 @@ import fun.sqlerrorthing.liquidonline.dto.play.HealthDto;
 import fun.sqlerrorthing.liquidonline.dto.play.PlayDto;
 import fun.sqlerrorthing.liquidonline.dto.play.PositionDto;
 import fun.sqlerrorthing.liquidonline.dto.play.RotationDto;
+import fun.sqlerrorthing.liquidonline.packets.s2c.party.S2CInvitePartyMemberResult;
 import fun.sqlerrorthing.liquidonline.packets.s2c.party.S2CPartySync;
 import fun.sqlerrorthing.liquidonline.packets.strategy.PacketSerializationStrategy;
 import fun.sqlerrorthing.liquidonline.packets.strategy.impl.jackson.json.JacksonJsonPacketSerializationStrategy;
@@ -46,6 +47,19 @@ public class TestNettyBufferSerialization {
         var deserializedPerson = buf.deserialize(Unpooled.wrappedBuffer(deserializedPersonBytes), Person.class);
 
         Assertions.assertEquals(person, deserializedPerson);
+    }
+
+    @Test
+    public void testEnum() throws IOException {
+        var strategy = new NettyBufferPacketSerializationStrategy();
+        var packet = S2CInvitePartyMemberResult.builder()
+                .result(S2CInvitePartyMemberResult.Result.INVITED)
+                .build();
+
+        var deserialized = strategy.deserializePacket(packet);
+        var serialized = strategy.serializePacket(deserialized);
+
+        Assertions.assertEquals(packet, serialized);
     }
 
     @Test

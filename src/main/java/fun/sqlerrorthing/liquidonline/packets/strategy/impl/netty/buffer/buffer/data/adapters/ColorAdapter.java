@@ -7,10 +7,11 @@ import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
 import java.io.IOException;
+import java.lang.reflect.Type;
 
 public class ColorAdapter implements BufferAdapter<Color> {
     @Override
-    public @NotNull Color deserialize(@NotNull ByteBufReader reader) throws IOException {
+    public @NotNull Color deserialize(@NotNull ByteBufReader reader, @NotNull Type type) throws IOException {
         int red = reader.readUnsignedByte();
         int green = reader.readUnsignedByte();
         int blue = reader.readUnsignedByte();
@@ -19,7 +20,7 @@ public class ColorAdapter implements BufferAdapter<Color> {
     }
 
     @Override
-    public void serialize(@NotNull Color src, @NotNull ByteBufWriter writer) throws IOException {
+    public void serialize(@NotNull Color src, @NotNull Type typeOfSrc, @NotNull ByteBufWriter writer) throws IOException {
         writer.writeByte((byte) src.getRed());
         writer.writeByte((byte) src.getGreen());
         writer.writeByte((byte) src.getBlue());

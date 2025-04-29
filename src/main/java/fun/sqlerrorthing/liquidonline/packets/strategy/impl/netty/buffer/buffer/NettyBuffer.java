@@ -9,7 +9,6 @@ import fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.buffer.buffer.
 import fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.buffer.buffer.wrappers.impl.ByteBufReaderImpl;
 import fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.buffer.buffer.wrappers.impl.ByteBufWriterImpl;
 import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
 import org.jetbrains.annotations.NotNull;
 
 import java.awt.Color;

@@ -11,14 +11,14 @@ import java.util.UUID;
 
 public class UUIDAdapter implements BufferAdapter<UUID> {
     @Override
-    public @NotNull UUID deserialize(@NotNull ByteBufReader reader) throws IOException {
+    public @NotNull UUID deserialize(@NotNull ByteBufReader reader, @NotNull Type type) throws IOException {
         var mostSigBits = reader.readLong();
         var leastSigBits = reader.readLong();
         return new UUID(mostSigBits, leastSigBits);
     }
 
     @Override
-    public void serialize(@NotNull UUID src, @NotNull ByteBufWriter writer) throws IOException {
+    public void serialize(@NotNull UUID src, @NotNull Type typeOfSrc, @NotNull ByteBufWriter writer) throws IOException {
         writer.writeLong(src.getMostSignificantBits());
         writer.writeLong(src.getLeastSignificantBits());
     }

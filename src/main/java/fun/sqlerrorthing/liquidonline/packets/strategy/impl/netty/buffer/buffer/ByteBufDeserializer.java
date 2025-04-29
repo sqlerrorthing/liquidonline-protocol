@@ -1,6 +1,7 @@
 package fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.buffer.buffer;
 
 import fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.buffer.buffer.data.BufferDeserializer;
+import fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.buffer.buffer.data.BufferSerializer;
 import fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.buffer.buffer.wrappers.ByteBufReader;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -61,6 +62,13 @@ public class ByteBufDeserializer {
 
         if (type == String.class) {
             return buf.readString();
+        } else if (type == Boolean.class || type == boolean.class) {
+            return buf.readBoolean();
+        } else if (type.isEnum()) {
+            @SuppressWarnings("unchecked")
+            Class<Enum<?>> enumClass = (Class<Enum<?>>) type;
+            int ordinal = buf.readInt();
+            return enumClass.getEnumConstants()[ordinal];
         } else if (type == Long.class || type == long.class) {
             return buf.readLong();
         } else if (type == Integer.class || type == int.class) {
@@ -71,10 +79,8 @@ public class ByteBufDeserializer {
             return buf.readByte();
         } else if (type == Double.class || type == double.class) {
             return buf.readDouble();
-        }else if (type == Float.class || type == float.class) {
+        } else if (type == Float.class || type == float.class) {
             return buf.readFloat();
-        } else if (type == Boolean.class || type == boolean.class) {
-            return buf.readBoolean();
         }
 
         if (type.isArray()) {
@@ -86,9 +92,9 @@ public class ByteBufDeserializer {
             return readList(buf, actualTypeArguments);
         }
 
-        BufferDeserializer<?> deserializer = deserializers.get(type);
+        BufferDeserializer<?> deserializer = getDeserializer(type);
         if (deserializer != null) {
-            return deserializer.deserialize(buf);
+            return deserializer.deserialize(buf, type);
         }
 
         return deserialize(buf, type);
@@ -127,5 +133,28 @@ public class ByteBufDeserializer {
         }
 
         return list;
+    }
+
+    private BufferDeserializer<?> getDeserializer(Class<?> clazz) {
+        BufferDeserializer<?> adapter = deserializers.get(clazz);
+        if (adapter != null) {
+            return adapter;
+        }
+
+        for (Class<?> superClass = clazz.getSuperclass(); superClass != null; superClass = superClass.getSuperclass()) {
+            adapter = deserializers.get(superClass);
+            if (adapter != null) {
+                return adapter;
+            }
+        }
+
+        for (Class<?> iface : clazz.getInterfaces()) {
+            adapter = deserializers.get(iface);
+            if (adapter != null) {
+                return adapter;
+            }
+        }
+
+        return null;
     }
 }

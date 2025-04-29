@@ -1,6 +1,5 @@
 package fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.buffer.buffer;
 
-import fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.buffer.buffer.data.BufferAdapter;
 import fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.buffer.buffer.data.BufferSerializer;
 import fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.buffer.buffer.wrappers.ByteBufWriter;
 import org.jetbrains.annotations.NotNull;
@@ -38,6 +37,10 @@ public class ByteBufSerializer {
             writer.writeNull();
         } else if (value instanceof String s) {
             writer.writeString(s);
+        } else if (value instanceof Boolean b) {
+            writer.writeBoolean(b);
+        } else if (value.getClass().isEnum()) {
+            writer.writeInt(((Enum<?>) value).ordinal());
         } else if (value instanceof Long l) {
             writer.writeLong(l);
         } else if (value instanceof Integer i) {
@@ -50,8 +53,6 @@ public class ByteBufSerializer {
             writer.writeFloat(f);
         } else if (value instanceof Double d) {
             writer.writeDouble(d);
-        } else if (value instanceof Boolean b) {
-            writer.writeBoolean(b);
         }
 
         else if (value.getClass().isArray()) {
@@ -59,9 +60,11 @@ public class ByteBufSerializer {
         } else if (value instanceof List<?> l) {
             writeList(writer, l);
         } else {
-            BufferSerializer<?> adapter = serializers.get(value.getClass());
+            var clazz = value.getClass();
+
+            BufferSerializer<?> adapter = getSerializer(clazz);
             if (adapter != null) {
-                ((BufferSerializer<Object>) adapter).serialize(value, writer);
+                ((BufferSerializer<Object>) adapter).serialize(value, clazz, writer);
                 return;
             }
 
@@ -83,5 +86,29 @@ public class ByteBufSerializer {
         for (var o : list) {
             writeValue(writer, o);
         }
+    }
+
+    @SuppressWarnings("unchecked")
+    private BufferSerializer<?> getSerializer(Class<?> clazz) {
+        BufferSerializer<?> adapter = serializers.get(clazz);
+        if (adapter != null) {
+            return adapter;
+        }
+
+        for (Class<?> superClass = clazz.getSuperclass(); superClass != null; superClass = superClass.getSuperclass()) {
+            adapter = serializers.get(superClass);
+            if (adapter != null) {
+                return adapter;
+            }
+        }
+
+        for (Class<?> iface : clazz.getInterfaces()) {
+            adapter = serializers.get(iface);
+            if (adapter != null) {
+                return adapter;
+            }
+        }
+
+        return null;
     }
 }

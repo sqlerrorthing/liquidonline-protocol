@@ -7,5 +7,5 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 
 public interface BufferSerializer<T> {
-    void serialize(@NotNull T src, @NotNull ByteBufWriter writer) throws IOException;
+    void serialize(@NotNull T src, @NotNull Type typeOfSrc, @NotNull ByteBufWriter writer) throws IOException;
 }

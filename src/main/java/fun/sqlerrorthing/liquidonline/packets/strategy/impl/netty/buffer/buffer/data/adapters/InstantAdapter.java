@@ -11,12 +11,12 @@ import java.time.Instant;
 
 public class InstantAdapter implements BufferAdapter<Instant> {
     @Override
-    public @NotNull Instant deserialize(@NotNull ByteBufReader reader) throws IOException {
+    public @NotNull Instant deserialize(@NotNull ByteBufReader reader, @NotNull Type type) throws IOException {
         return Instant.ofEpochMilli(reader.readLong());
     }
 
     @Override
-    public void serialize(@NotNull Instant src, @NotNull ByteBufWriter writer) throws IOException {
+    public void serialize(@NotNull Instant src, @NotNull Type typeOfSrc, @NotNull ByteBufWriter writer) throws IOException {
         writer.writeLong(src.toEpochMilli());
     }
 }
