@@ -51,9 +51,11 @@ tasks.register('instrumentClasses', JavaExec) {
     setMainClass("fun.sqlerrorthing.liquidonline.autogenerate.packets.serialization.bytebuf.AutoGenerateProcessor")
     setClasspath(files(instrumenterJar))
     args(sourceSets.main.output.classesDirs)
+
+    outputs.upToDateWhen { false }
 }
 
-compileJava.finalizedBy instrumentClasses
+classes.finalizedBy instrumentClasses
 
 tasks.register('printVersion') {
     doLast {

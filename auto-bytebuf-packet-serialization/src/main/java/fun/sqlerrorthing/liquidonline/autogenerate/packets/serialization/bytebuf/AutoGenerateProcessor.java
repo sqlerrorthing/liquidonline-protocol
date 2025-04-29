@@ -1,7 +1,6 @@
 package fun.sqlerrorthing.liquidonline.autogenerate.packets.serialization.bytebuf;
 
 import javassist.*;
-import javassist.bytecode.BadBytecode;
 import javassist.bytecode.SignatureAttribute;
 
 import java.io.ByteArrayInputStream;
@@ -10,12 +9,21 @@ import java.io.IOException;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.text.MessageFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 public class AutoGenerateProcessor {
-    public static void main(String[] args) throws IOException {
+    private static final String DESERIALIZATION_HELPER_CLASS = "fun.sqlerrorthing.liquidonline.packets.ClassesPacketSerialization";
+    private static Path BUILD_DIR;
+    private static CtClass HELPER;
+
+    public static void main(String[] args) throws IOException, CannotCompileException {
         var root = Paths.get(args[0]);
+        BUILD_DIR = root;
+
         var pool = ClassPool.getDefault();
 
         List<Path> classFiles = new ArrayList<>();
@@ -30,6 +38,14 @@ public class AutoGenerateProcessor {
             }
         });
 
+
+
+        try {
+            HELPER = pool.get(DESERIALIZATION_HELPER_CLASS);
+        } catch (NotFoundException e) {
+            HELPER = pool.makeClass(DESERIALIZATION_HELPER_CLASS);
+        }
+
         Map<Path, CtClass> loadedClasses = new HashMap<>();
         for (Path file : classFiles) {
             try {
@@ -42,7 +58,6 @@ public class AutoGenerateProcessor {
             }
         }
 
-        // Обрабатываем загруженные классы
         for (Map.Entry<Path, CtClass> entry : loadedClasses.entrySet()) {
             Path file = entry.getKey();
             CtClass clazz = entry.getValue();
@@ -56,6 +71,8 @@ public class AutoGenerateProcessor {
                 e.printStackTrace();
             }
         }
+
+        HELPER.writeFile(BUILD_DIR.toAbsolutePath().toString());
     }
 
     private static void instrumentClass(ClassPool pool, CtClass clazz) throws Exception {
@@ -100,15 +117,17 @@ public class AutoGenerateProcessor {
         var sb = new StringBuilder();
         sb.append("{");
 
+        ensureWriteObjectOrReferenceMethod(pool, HELPER);
+
         for (var field : clazz.getDeclaredFields()) {
-            writeField(pool, field.getName(), field.getGenericSignature(), clazz, field.getType(), sb);
+            writeField(pool, field.getName(), field.getGenericSignature(), field.getType(), sb);
         }
 
         sb.append("}");
         return sb;
     }
 
-    private static void writeField(ClassPool pool, String name, String genericSignature, CtClass root, CtClass type, StringBuilder sb) throws Exception {
+    private static void writeField(ClassPool pool, String name, String genericSignature, CtClass type, StringBuilder sb) throws Exception {
         if (type.equals(CtClass.intType) || type.equals(pool.get("java.lang.Integer"))) {
             addWriteStatement(type, "$1.writeInt({0});", name, sb);
         } else if (type.equals(CtClass.shortType) || type.equals(pool.get("java.lang.Short"))) {
@@ -143,6 +162,7 @@ public class AutoGenerateProcessor {
                     $1.writeLong({0}.getLeastSignificantBits());
                     """, name, sb);
         } else if (type.equals(pool.get("java.util.List"))) {
+            ensureWriteOrReferenceMethod(pool, HELPER, type);
             var signature = SignatureAttribute.toTypeSignature(genericSignature).jvmTypeName();
             var genericType = signature.substring(signature.indexOf('<') + 1, signature.indexOf('>'));
 
@@ -150,18 +170,25 @@ public class AutoGenerateProcessor {
             sb.append("$1.writeInt(%s.size());".formatted(name));
 
             sb.append("for (int i = 0; i < %s.size(); i++) {".formatted(name));
-            writeField(pool, "%s.get(i)".formatted(name), genericSignature, root, pool.get(genericType), sb);
+            writeField(pool, "%s.get(i)".formatted(name), genericSignature, pool.get(genericType), sb);
             sb.append("}");
 
             sb.append("} else { $1.writeNull(); };");
         } else if (type.isArray()) {
-            throw new UnsupportedOperationException("Not implemented yet");
+            CtClass componentType = type.getComponentType();
+            if (componentType.equals(CtClass.byteType)) {
+                sb.append("if (%s != null) {".formatted(name));
+                sb.append("$1.writeInt(%s.length);".formatted(name));
+                sb.append("$1.writeBytes(%s);".formatted(name));
+                sb.append("} else { $1.writeNull(); };");
+            } else {
+                throw new UnsupportedOperationException("Unsupported operation yet");
+            }
         } else {
-            ensureWriteOrReferenceMethod(pool, root, pool.get("java.lang.Object"));
-            ensureWriteOrReferenceMethod(pool, root, type);
+            ensureWriteOrReferenceMethod(pool, HELPER, type);
 
             sb.append("if (%s != null) {".formatted(name));
-            sb.append("write($1, %s);".formatted(name));
+            sb.append("%s.write($1, (%s) %s);".formatted(HELPER.getName(), type.getName(), name));
             sb.append("} else { $1.writeNull(); };");
         }
     }
@@ -176,23 +203,41 @@ public class AutoGenerateProcessor {
         }
     }
 
+    private static void ensureWriteObjectOrReferenceMethod(ClassPool pool, CtClass targetClass) throws Exception {
+        var bufWriter = pool.get("fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.buffer.wrappers.ByteBufWriter");
+        var obj = pool.get("java.lang.Object");
+
+        try {
+            targetClass.getDeclaredMethod("write", new CtClass[] {bufWriter, obj});
+            return;
+        } catch (NotFoundException ignored) {
+
+        }
+
+        CtMethod newMethod = CtNewMethod.make("""
+                public static void write(%s $1, %s $2) {
+                    throw new java.lang.UnsupportedOperationException("Not implemented yet");
+                }
+                """.formatted(bufWriter.getName(), obj.getName()), targetClass);
+
+        targetClass.addMethod(newMethod);
+    }
 
     private static void ensureWriteOrReferenceMethod(ClassPool pool, CtClass targetClass, CtClass type) throws Exception {
-        String methodName = "write";
         var bufWriter = pool.get("fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.buffer.wrappers.ByteBufWriter");
 
         try {
-            targetClass.getDeclaredMethod(methodName, new CtClass[] {bufWriter, type});
+            targetClass.getDeclaredMethod("write", new CtClass[] {bufWriter, type});
             return;
         } catch (NotFoundException ignored) {
 
         }
 
         StringBuilder sb = new StringBuilder();
-        sb.append("private static void write(%s $1, %s $2) {".formatted(bufWriter.getName(), type.getName()));
+        sb.append("public static void write(%s $1, %s $2) {".formatted(bufWriter.getName(), type.getName()));
 
         for (var field : type.getDeclaredFields()) {
-            writeField(pool, "$2." + toGetterName(field.getType(), field.getName()) + "()", field.getGenericSignature(), targetClass, field.getType(), sb);
+            writeField(pool, "$2." + toGetterName(field.getType(), field.getName()) + "()", field.getGenericSignature(), field.getType(), sb);
         }
 
         sb.append("};");
