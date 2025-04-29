@@ -1,8 +1,8 @@
 package fun.sqlerrorthing.liquidonline.packets;
 
-import fun.sqlerrorthing.liquidonline.packets.c2s.friends.C2SStopBeingFriends;
 import fun.sqlerrorthing.liquidonline.packets.c2s.friends.C2SRespondFriendRequest;
 import fun.sqlerrorthing.liquidonline.packets.c2s.friends.C2SSendFriendRequest;
+import fun.sqlerrorthing.liquidonline.packets.c2s.friends.C2SStopBeingFriends;
 import fun.sqlerrorthing.liquidonline.packets.c2s.login.C2SLogin;
 import fun.sqlerrorthing.liquidonline.packets.c2s.party.*;
 import fun.sqlerrorthing.liquidonline.packets.c2s.update.C2SUpdateMinecraftUsername;
@@ -74,6 +74,7 @@ public class Packets {
             C2SPartyLeave.class,
             C2SPartyDisband.class,
             C2SPartyPlayUpdate.class,
+            C2SPartySetMarker.class,
 
             // Server-to-Client
             S2CDisconnected.class,
@@ -108,6 +109,8 @@ public class Packets {
             S2CPartyMemberPlayUpdate.class,
             S2CPartyMemberStatusUpdate.class,
             S2CPartySync.class,
+            S2CPartySetMarkerResult.class,
+            S2CPartyNewMarker.class
     };
 
     /**

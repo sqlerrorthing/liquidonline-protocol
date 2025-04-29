@@ -49,6 +49,12 @@ public class PartyDto {
     boolean partyPublic;
 
     /**
+     * The max members of the party.
+     */
+    @SerializedName("g")
+    int maxMembers;
+
+    /**
      * The ID of the party owner.
      * <p>
      *     This represents the unique identifier of the person who owns the party. The owner has special privileges,

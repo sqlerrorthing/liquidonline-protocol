@@ -1,5 +1,7 @@
 package fun.sqlerrorthing.liquidonline;
 
+import java.time.Duration;
+
 public class SharedConstants {
     public static final String USERNAME_PATTERN = "^\\w{3,16}$";
     public static final String MINECRAFT_USERNAME_PATTERN = "^\\w{3,16}$";
@@ -8,5 +10,5 @@ public class SharedConstants {
 
     public static final String PARTY_NAME_PATTERN = "^(?!.* {2,})(?=.{3,24}$)[a-zA-Zа-яА-ЯёЁ0-9$'.,:;!?%&()\\[\\]{}\"\\- _]+$";
 
-    public static final int MAX_PARTY_MEMBERS_LIMIT = 10;
+    public static final Duration MAX_MARKER_LIFETIME = Duration.ofSeconds(3);
 }
