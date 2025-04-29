@@ -101,14 +101,14 @@ public class AutoGenerateProcessor {
         sb.append("{");
 
         for (var field : clazz.getDeclaredFields()) {
-            writeField(pool, field.getName(), clazz, field.getType(), sb);
+            writeField(pool, field.getName(), field.getGenericSignature(), clazz, field.getType(), sb);
         }
 
         sb.append("}");
         return sb;
     }
 
-    private static void writeField(ClassPool pool, String name, CtClass root, CtClass type, StringBuilder sb) throws Exception {
+    private static void writeField(ClassPool pool, String name, String genericSignature, CtClass root, CtClass type, StringBuilder sb) throws Exception {
         if (type.equals(CtClass.intType) || type.equals(pool.get("java.lang.Integer"))) {
             addWriteStatement(type, "$1.writeInt({0});", name, sb);
         } else if (type.equals(CtClass.shortType) || type.equals(pool.get("java.lang.Short"))) {
@@ -143,36 +143,25 @@ public class AutoGenerateProcessor {
                     $1.writeLong({0}.getLeastSignificantBits());
                     """, name, sb);
         } else if (type.equals(pool.get("java.util.List"))) {
-            var generic = getFirstGenericType(type);
-            assert generic != null;
+            var signature = SignatureAttribute.toTypeSignature(genericSignature).jvmTypeName();
+            var genericType = signature.substring(signature.indexOf('<') + 1, signature.indexOf('>'));
 
             sb.append("if (%s != null) {".formatted(name));
             sb.append("$1.writeInt(%s.size());".formatted(name));
 
             sb.append("for (int i = 0; i < %s.size(); i++) {".formatted(name));
-            writeField(pool, "%s.get(i)".formatted(name), root, generic, sb);
+            writeField(pool, "%s.get(i)".formatted(name), genericSignature, root, pool.get(genericType), sb);
             sb.append("}");
 
             sb.append("} else { $1.writeNull(); };");
         } else {
+            ensureWriteOrReferenceMethod(pool, root, pool.get("java.lang.Object"));
             ensureWriteOrReferenceMethod(pool, root, type);
 
             sb.append("if (%s != null) {".formatted(name));
             sb.append("write($1, %s);".formatted(name));
             sb.append("} else { $1.writeNull(); };");
         }
-    }
-
-    private static CtClass getFirstGenericType(CtClass ctClass) throws Exception {
-        String genericSignature = ctClass.getGenericSignature();
-        if (genericSignature == null) {
-            return null;
-        }
-
-        var classType = SignatureAttribute.toClassSignature(genericSignature).getSuperClass().getTypeArguments()[0];
-        System.out.println(classType);
-        System.exit(1);
-        return ClassPool.getDefault().get("");
     }
 
     private static void addWriteStatement(CtClass type, String statement, String name, StringBuilder sb) {
@@ -184,6 +173,7 @@ public class AutoGenerateProcessor {
             sb.append(" if (%s != null) { %s } else { $1.writeNull(); };".formatted(name, statement));
         }
     }
+
 
     private static void ensureWriteOrReferenceMethod(ClassPool pool, CtClass targetClass, CtClass type) throws Exception {
         String methodName = "write";
@@ -200,7 +190,7 @@ public class AutoGenerateProcessor {
         sb.append("private static void write(%s $1, %s $2) {".formatted(bufWriter.getName(), type.getName()));
 
         for (var field : type.getDeclaredFields()) {
-            writeField(pool, "$2." + toGetterName(field.getType(), field.getName()) + "()", targetClass, field.getType(), sb);
+            writeField(pool, "$2." + toGetterName(field.getType(), field.getName()) + "()", field.getGenericSignature(), targetClass, field.getType(), sb);
         }
 
         sb.append("};");
