@@ -11,4 +11,6 @@ public class SharedConstants {
     public static final String PARTY_NAME_PATTERN = "^(?!.* {2,})(?=.{3,24}$)[a-zA-Zа-яА-ЯёЁ0-9$'.,:;!?%&()\\[\\]{}\"\\- _]+$";
 
     public static final Duration MAX_MARKER_LIFETIME = Duration.ofSeconds(3);
+
+    public static final byte NULL_MARKER_BYTE = (byte) 0xC0;
 }

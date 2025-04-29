@@ -1,5 +1,6 @@
 package fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.buffer.buffer.wrappers.impl;
 
+import fun.sqlerrorthing.liquidonline.SharedConstants;
 import fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.buffer.buffer.wrappers.ByteBufWriter;
 import io.netty.buffer.ByteBuf;
 import lombok.AllArgsConstructor;
@@ -27,7 +28,7 @@ public class ByteBufWriterImpl implements ByteBufWriter {
 
     @Override
     public void writeNull() {
-        writeByte((byte) 0xC0);
+        writeByte(SharedConstants.NULL_MARKER_BYTE);
     }
 
     @Override
