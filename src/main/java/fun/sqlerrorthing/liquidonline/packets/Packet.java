@@ -11,15 +11,6 @@ import org.jetbrains.annotations.NotNull;
  * </p>
  *
  * <p>
- * The general format of a packet is:
- * </p>
- * <pre>
- * {
- *     "id": byte,
- *     "payload": { ... }
- * }
- * </pre>
- * <p>
  * The meaning and structure of the {@code payload} is determined based on the {@code id}.
  * </p>
  */
