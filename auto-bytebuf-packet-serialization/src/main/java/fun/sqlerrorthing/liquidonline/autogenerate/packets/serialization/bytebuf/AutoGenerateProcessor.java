@@ -154,6 +154,8 @@ public class AutoGenerateProcessor {
             sb.append("}");
 
             sb.append("} else { $1.writeNull(); };");
+        } else if (type.isArray()) {
+            throw new UnsupportedOperationException("Not implemented yet");
         } else {
             ensureWriteOrReferenceMethod(pool, root, pool.get("java.lang.Object"));
             ensureWriteOrReferenceMethod(pool, root, type);
