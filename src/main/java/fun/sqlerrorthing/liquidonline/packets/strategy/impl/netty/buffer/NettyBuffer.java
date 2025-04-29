@@ -1,13 +1,13 @@
-package fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.buffer.buffer;
+package fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.buffer;
 
-import fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.buffer.buffer.data.BufferAdapter;
-import fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.buffer.buffer.data.BufferDeserializer;
-import fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.buffer.buffer.data.BufferSerializer;
-import fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.buffer.buffer.data.adapters.ColorAdapter;
-import fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.buffer.buffer.data.adapters.InstantAdapter;
-import fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.buffer.buffer.data.adapters.UUIDAdapter;
-import fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.buffer.buffer.wrappers.impl.ByteBufReaderImpl;
-import fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.buffer.buffer.wrappers.impl.ByteBufWriterImpl;
+import fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.buffer.data.BufferAdapter;
+import fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.buffer.data.BufferDeserializer;
+import fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.buffer.data.BufferSerializer;
+import fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.buffer.data.adapters.ColorAdapter;
+import fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.buffer.data.adapters.InstantAdapter;
+import fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.buffer.data.adapters.UUIDAdapter;
+import fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.buffer.wrappers.impl.ByteBufReaderImpl;
+import fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.buffer.wrappers.impl.ByteBufWriterImpl;
 import io.netty.buffer.ByteBuf;
 import org.jetbrains.annotations.NotNull;
 

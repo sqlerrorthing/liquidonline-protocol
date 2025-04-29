@@ -1,6 +1,4 @@
-package fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.buffer.buffer.wrappers;
-
-import org.jetbrains.annotations.Nullable;
+package fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.buffer.wrappers;
 
 public interface ByteBufReader {
     short readUnsignedByte();

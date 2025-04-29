@@ -1,3 +1,4 @@
 rootProject.name = 'liquidonline-protocol'
 
-
+include 'auto-bytebuf-packet-serialization'
+project(':auto-bytebuf-packet-serialization').projectDir = file('auto-bytebuf-packet-serialization')

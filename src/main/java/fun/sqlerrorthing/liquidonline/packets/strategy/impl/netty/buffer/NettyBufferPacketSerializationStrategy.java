@@ -3,7 +3,6 @@ package fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.buffer;
 import fun.sqlerrorthing.liquidonline.packets.Packet;
 import fun.sqlerrorthing.liquidonline.packets.Packets;
 import fun.sqlerrorthing.liquidonline.packets.strategy.PacketSerializationStrategy;
-import fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.buffer.buffer.NettyBuffer;
 import io.netty.buffer.Unpooled;
 import org.jetbrains.annotations.NotNull;
 
@@ -27,8 +26,7 @@ public class NettyBufferPacketSerializationStrategy implements PacketSerializati
     private final NettyBuffer nettyBuffer;
 
     public NettyBufferPacketSerializationStrategy() {
-        this.nettyBuffer = NettyBuffer.builder()
-                .build();
+        this.nettyBuffer = NettyBuffer.builder().build();
     }
 
     @Override
