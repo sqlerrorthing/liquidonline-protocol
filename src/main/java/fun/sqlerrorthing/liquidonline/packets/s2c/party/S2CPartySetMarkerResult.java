@@ -28,7 +28,7 @@ public class S2CPartySetMarkerResult implements Packet {
     @jakarta.validation.constraints.NotNull
     Result result;
 
-    enum Result {
+    public enum Result {
         /**
          * The player is not at a party and cannot set a marker.
          */
