@@ -25,6 +25,9 @@ dependencies {
 
     compileOnly 'org.msgpack:msgpack-core:0.9.9'
 
+    compileOnly 'io.netty:netty-buffer:4.2.0.Final'
+    testImplementation 'io.netty:netty-buffer:4.2.0.Final'
+
     compileOnly 'org.projectlombok:lombok:1.18.38'
     annotationProcessor 'org.projectlombok:lombok:1.18.38'
 }
