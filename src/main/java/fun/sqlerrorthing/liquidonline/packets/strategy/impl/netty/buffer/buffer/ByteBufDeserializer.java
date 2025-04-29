@@ -1,7 +1,7 @@
 package fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.buffer.buffer;
 
 import fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.buffer.buffer.data.BufferDeserializer;
-import fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.buffer.buffer.data.BufferSerializer;
+import fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.buffer.buffer.data.context.BufferDeserializationContext;
 import fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.buffer.buffer.wrappers.ByteBufReader;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -16,8 +16,12 @@ public class ByteBufDeserializer {
     @NotNull
     private final Map<Class<?>, BufferDeserializer<?>> deserializers;
 
+    @NotNull
+    private final BufferDeserializationContext context;
+
     public ByteBufDeserializer(@NotNull Map<Class<?>, BufferDeserializer<?>> deserializers) {
         this.deserializers = deserializers;
+        this.context = ByteBufDeserializer.this::deserialize;
     }
 
     @NotNull
@@ -94,7 +98,7 @@ public class ByteBufDeserializer {
 
         BufferDeserializer<?> deserializer = getDeserializer(type);
         if (deserializer != null) {
-            return deserializer.deserialize(buf, type);
+            return deserializer.deserialize(buf, type, context);
         }
 
         return deserialize(buf, type);

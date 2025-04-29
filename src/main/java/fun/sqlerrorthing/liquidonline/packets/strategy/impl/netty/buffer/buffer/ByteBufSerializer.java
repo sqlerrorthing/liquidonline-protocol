@@ -1,6 +1,7 @@
 package fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.buffer.buffer;
 
 import fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.buffer.buffer.data.BufferSerializer;
+import fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.buffer.buffer.data.context.BufferSerializationContext;
 import fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.buffer.buffer.wrappers.ByteBufWriter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -14,8 +15,12 @@ public class ByteBufSerializer {
     @NotNull
     private final Map<Class<?>, BufferSerializer<?>> serializers;
 
+    @NotNull
+    private final BufferSerializationContext context;
+
     public ByteBufSerializer(@NotNull Map<Class<?>, BufferSerializer<?>> serializers) {
         this.serializers = serializers;
+        this.context = this::serialize;
     }
 
     void serialize(@NotNull ByteBufWriter writer, @NotNull Object obj) throws IOException {
@@ -64,7 +69,7 @@ public class ByteBufSerializer {
 
             BufferSerializer<?> adapter = getSerializer(clazz);
             if (adapter != null) {
-                ((BufferSerializer<Object>) adapter).serialize(value, clazz, writer);
+                ((BufferSerializer<Object>) adapter).serialize(value, clazz, writer, context);
                 return;
             }
 
