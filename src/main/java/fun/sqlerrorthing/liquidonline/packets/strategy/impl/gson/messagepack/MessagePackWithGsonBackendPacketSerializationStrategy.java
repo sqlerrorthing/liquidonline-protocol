@@ -38,12 +38,12 @@ public class MessagePackWithGsonBackendPacketSerializationStrategy implements Pa
     }
 
     @Override
-    public byte @NotNull [] deserializePacket(@NotNull Packet packet) throws IOException {
-        return JsonToMessagePack.jsonToMsgPack(backend.deserializePacket(packet));
+    public byte @NotNull [] serializePacket(@NotNull Packet packet) throws IOException {
+        return JsonToMessagePack.jsonToMsgPack(backend.serializePacket(packet));
     }
 
     @Override
-    public @NotNull Packet serializePacket(byte @NotNull [] deserializedPacket) throws IOException {
-        return backend.serializePacketFromString(MessagePackToJson.msgPackToJson(deserializedPacket));
+    public @NotNull Packet deserializePacket(byte @NotNull [] serializedPacket) throws IOException {
+        return backend.deserializePacketFromString(MessagePackToJson.msgPackToJson(serializedPacket));
     }
 }

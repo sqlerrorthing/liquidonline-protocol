@@ -79,7 +79,7 @@ public class JacksonJsonPacketSerializationStrategy implements PacketSerializati
     }
 
     @Override
-    public byte @NotNull [] deserializePacket(@NotNull Packet packet) throws IOException {
+    public byte @NotNull [] serializePacket(@NotNull Packet packet) throws IOException {
         var json = mapper.createObjectNode();
 
         json.put("i", packet.id());
@@ -89,8 +89,8 @@ public class JacksonJsonPacketSerializationStrategy implements PacketSerializati
     }
 
     @Override
-    public @NotNull Packet serializePacket(byte @NotNull [] deserializedPacket) throws IOException {
-        var root = mapper.readTree(deserializedPacket);
+    public @NotNull Packet deserializePacket(byte @NotNull [] serializedPacket) throws IOException {
+        var root = mapper.readTree(serializedPacket);
         var packetClass = Packets.PACKETS_WITH_ID.get((byte) root.get("i").asInt());
 
         if (packetClass == null) {

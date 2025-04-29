@@ -22,49 +22,49 @@ import java.nio.charset.StandardCharsets;
  */
 public interface PacketSerializationStrategy {
     /**
-     * Deserializes the given packet into a byte array.
+     * Serializes the given packet into a byte array.
      *
-     * @param packet the packet to deserialize.
-     * @return the byte array representing the deserialized packet.
-     * @throws IOException if the packet cannot be deserialized.
+     * @param packet the packet to serialize.
+     * @return the byte array representing the serialized packet.
+     * @throws IOException if the packet cannot be serialized.
      */
-    byte @NotNull [] deserializePacket(@NotNull Packet packet) throws IOException;
+    byte @NotNull [] serializePacket(@NotNull Packet packet) throws IOException;
 
     /**
-     * Converts the deserialized packet into a string.
-     * This method uses the {@link #deserializePacket(Packet)} method to
+     * Converts the serialized packet into a string.
+     * This method uses the {@link #serializePacket(Packet)} method to
      * convert the packet into a byte array and then encodes it as a UTF-8 string.
      *
-     * @param packet the packet to deserialize.
-     * @return a string representation of the deserialized packet.
-     * @throws IOException if the packet cannot be deserialized.
+     * @param packet the packet to serialize.
+     * @return a string representation of the serialized packet.
+     * @throws IOException if the packet cannot be serialized.
      */
     @NotNull
-    default String deserializePacketToString(@NotNull Packet packet) throws IOException {
-        return new String(deserializePacket(packet));
+    default String serializePacketToString(@NotNull Packet packet) throws IOException {
+        return new String(serializePacket(packet));
     }
 
     /**
-     * Serializes the given byte array back into a packet.
+     * Deserializes the given byte array back into a packet.
      *
-     * @param deserializedPacket the byte array to serialize into a packet.
+     * @param serializedPacket the byte array to serialize into a packet.
      * @return the serialized packet.
      * @throws IOException if the byte array cannot be serialized.
      */
     @NotNull
-    Packet serializePacket(byte @NotNull [] deserializedPacket) throws IOException;
+    Packet deserializePacket(byte @NotNull [] serializedPacket) throws IOException;
 
     /**
-     * Serializes a string representation of the deserialized packet into a packet.
+     * Deserializes a string representation of the serialized packet into a packet.
      * This method first converts the string into a byte array using UTF-8 encoding
-     * and then calls {@link #serializePacket(byte[])} to serialize it into a packet.
+     * and then calls {@link #deserializePacket(byte[])} to serialize it into a packet.
      *
-     * @param deserializedPacket the string representation of the deserialized packet.
+     * @param serializedPacket the string representation of the serialized packet.
      * @return the serialized packet.
      * @throws IOException if the string cannot be serialized.
      */
     @NotNull
-    default Packet serializePacketFromString(@NotNull String deserializedPacket) throws IOException {
-        return serializePacket(deserializedPacket.getBytes(StandardCharsets.UTF_8));
+    default Packet deserializePacketFromString(@NotNull String serializedPacket) throws IOException {
+        return deserializePacket(serializedPacket.getBytes(StandardCharsets.UTF_8));
     }
 }

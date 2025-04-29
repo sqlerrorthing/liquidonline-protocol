@@ -57,7 +57,7 @@ public class GsonJsonPacketSerializationStrategy implements PacketSerializationS
 
 
     @Override
-    public @NotNull String deserializePacketToString(@NotNull Packet packet) {
+    public @NotNull String serializePacketToString(@NotNull Packet packet) {
         var json = new JsonObject();
         json.addProperty("i", packet.id());
         json.add("p", gson.toJsonTree(packet));
@@ -66,8 +66,8 @@ public class GsonJsonPacketSerializationStrategy implements PacketSerializationS
     }
 
     @Override
-    public @NotNull Packet serializePacketFromString(@NotNull String deserializedPacket) throws IOException {
-        var root = JsonParser.parseString(deserializedPacket).getAsJsonObject();
+    public @NotNull Packet deserializePacketFromString(@NotNull String serializedPacket) throws IOException {
+        var root = JsonParser.parseString(serializedPacket).getAsJsonObject();
 
         var packetClass = Packets.PACKETS_WITH_ID.get(root.get("i").getAsByte());
         if (packetClass == null) {
@@ -78,12 +78,12 @@ public class GsonJsonPacketSerializationStrategy implements PacketSerializationS
     }
 
     @Override
-    public byte @NotNull [] deserializePacket(@NotNull Packet packet) {
-        return deserializePacketToString(packet).getBytes(StandardCharsets.UTF_8);
+    public byte @NotNull [] serializePacket(@NotNull Packet packet) {
+        return serializePacketToString(packet).getBytes(StandardCharsets.UTF_8);
     }
 
     @Override
-    public @NotNull Packet serializePacket(byte @NotNull [] deserializedPacket) throws IOException {
-        return serializePacketFromString(new String(deserializedPacket));
+    public @NotNull Packet deserializePacket(byte @NotNull [] serializedPacket) throws IOException {
+        return deserializePacketFromString(new String(serializedPacket));
     }
 }
