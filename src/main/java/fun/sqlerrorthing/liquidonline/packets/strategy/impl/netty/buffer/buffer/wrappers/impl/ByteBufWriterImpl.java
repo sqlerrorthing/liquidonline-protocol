@@ -21,6 +21,11 @@ public class ByteBufWriterImpl implements ByteBufWriter {
     }
 
     @Override
+    public void writeBoolean(boolean b) {
+        byteBuf.writeBoolean(b);
+    }
+
+    @Override
     public void writeNull() {
         writeByte((byte) 0xC0);
     }

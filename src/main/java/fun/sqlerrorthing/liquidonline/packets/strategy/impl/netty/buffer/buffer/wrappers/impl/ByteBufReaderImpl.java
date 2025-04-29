@@ -64,6 +64,11 @@ public class ByteBufReaderImpl implements ByteBufReader {
     }
 
     @Override
+    public float readFloat() {
+        return byteBuf.readFloat();
+    }
+
+    @Override
     public String readString() {
         int length = byteBuf.readInt();
         byte[] bytes = new byte[length];

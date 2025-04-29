@@ -71,6 +71,8 @@ public class ByteBufDeserializer {
             return buf.readByte();
         } else if (type == Double.class || type == double.class) {
             return buf.readDouble();
+        }else if (type == Float.class || type == float.class) {
+            return buf.readFloat();
         } else if (type == Boolean.class || type == boolean.class) {
             return buf.readBoolean();
         }

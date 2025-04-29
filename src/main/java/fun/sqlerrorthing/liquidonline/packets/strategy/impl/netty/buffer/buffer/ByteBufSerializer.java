@@ -50,6 +50,8 @@ public class ByteBufSerializer {
             writer.writeFloat(f);
         } else if (value instanceof Double d) {
             writer.writeDouble(d);
+        } else if (value instanceof Boolean b) {
+            writer.writeBoolean(b);
         }
 
         else if (value.getClass().isArray()) {

@@ -23,17 +23,17 @@ public class PositionDto {
      * The player's X coordinate in the world.
      */
     @SerializedName("x")
-    double x;
+    float x;
 
     /**
      * The player's Y coordinate in the world.
      */
     @SerializedName("y")
-    double y;
+    float y;
 
     /**
      * The player's Z coordinate in the world.
      */
     @SerializedName("z")
-    double z;
+    float z;
 }

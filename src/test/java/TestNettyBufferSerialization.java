@@ -1,20 +1,27 @@
+import fun.sqlerrorthing.liquidonline.dto.party.InvitedMemberDto;
+import fun.sqlerrorthing.liquidonline.dto.party.PartyDto;
+import fun.sqlerrorthing.liquidonline.dto.party.PartyMemberDto;
+import fun.sqlerrorthing.liquidonline.dto.play.HealthDto;
+import fun.sqlerrorthing.liquidonline.dto.play.PlayDto;
+import fun.sqlerrorthing.liquidonline.dto.play.PositionDto;
+import fun.sqlerrorthing.liquidonline.dto.play.RotationDto;
+import fun.sqlerrorthing.liquidonline.packets.s2c.party.S2CPartySync;
+import fun.sqlerrorthing.liquidonline.packets.strategy.PacketSerializationStrategy;
+import fun.sqlerrorthing.liquidonline.packets.strategy.impl.jackson.json.JacksonJsonPacketSerializationStrategy;
+import fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.buffer.NettyBufferPacketSerializationStrategy;
 import fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.buffer.buffer.NettyBuffer;
-import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.awt.*;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class TestNettyBufferSerialization {
     @Test
     public void testSerialization() throws IOException {
-        NettyBuffer buf = new NettyBuffer();
+        NettyBuffer buf = NettyBuffer.builder().build();
 
         var children = new Person(
                 "Children1",
@@ -41,6 +48,74 @@ public class TestNettyBufferSerialization {
         Assertions.assertEquals(person, deserializedPerson);
     }
 
+    @Test
+    public void testBigPacketSerialization() throws IOException {
+        var strategy = new NettyBufferPacketSerializationStrategy();
+
+        var members = new ArrayList<PartyMemberDto>();
+
+        members.add(buildDummyPartyMember(0, "sqlerrorthing", "sqlerrorthing", Color.RED, true));
+        members.add(buildDummyPartyMember(1, "xakerxlop", "xakerxlop", Color.BLACK, true));
+        members.add(buildDummyPartyMember(2, "1zuna", "1zun4", Color.WHITE, false));
+        members.add(buildDummyPartyMember(3, "superblaubeere2", "superblaubeere27", Color.CYAN, true));
+        members.add(buildDummyPartyMember(4, "Mukja", "Mukja", Color.PINK, false));
+        members.add(buildDummyPartyMember(5, "sssl", "sssl", Color.DARK_GRAY, true));
+        members.add(buildDummyPartyMember(6, "sosiska", "schizophrenia_bl", Color.GREEN, true));
+
+        var invited = new ArrayList<InvitedMemberDto>();
+
+        var dummyParty = PartyDto.builder()
+                .id(UUID.randomUUID())
+                .name("DummyParty")
+                .partyPublic(false)
+                .maxMembers(10)
+                .ownerId(0)
+                .members(members)
+                .invitedMembers(invited)
+                .build();
+
+        var packet = S2CPartySync.builder()
+                .party(dummyParty)
+                .build();
+
+        var deserialized = strategy.deserializePacket(packet);
+        var serialized = strategy.serializePacket(deserialized);
+
+        Assertions.assertEquals(packet, serialized);
+    }
+
+    private PartyMemberDto buildDummyPartyMember(int id, String name, String minecraftName, Color color, boolean usePlayData) {
+        var random = new Random();
+
+        var playData = PlayDto.builder()
+                .entityId(random.nextInt())
+                .dimension("minecraft:ownerworld")
+                .server("mc.funtime.su")
+                .health(HealthDto.builder()
+                        .health(random.nextFloat(20))
+                        .maxHealth(20)
+                        .hurtTime(0)
+                        .build())
+                .position(PositionDto.builder()
+                        .x(random.nextFloat())
+                        .y(random.nextFloat())
+                        .z(random.nextFloat())
+                        .build())
+                .rotation(RotationDto.builder()
+                        .yaw(random.nextFloat(180))
+                        .pitch(random.nextFloat(90))
+                        .build())
+                .build();
+
+        return PartyMemberDto.builder()
+                .memberId(id)
+                .username(name)
+                .minecraftUsername(minecraftName)
+                .skin(new byte[] { 22, 21, -23, 111, -10, 32 })
+                .color(color)
+                .playData(usePlayData ? playData : null)
+                .build();
+    }
 
     @SuppressWarnings("unused")
     public static class Person {

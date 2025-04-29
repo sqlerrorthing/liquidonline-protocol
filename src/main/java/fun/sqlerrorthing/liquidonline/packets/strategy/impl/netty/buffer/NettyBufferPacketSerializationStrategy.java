@@ -9,12 +9,26 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 
-public class NettyBufferSerializationStrategy implements PacketSerializationStrategy {
+/**
+ * A strategy for serializing and deserializing packets using Netty's {@link Unpooled} buffer and {@link NettyBuffer}.
+ * This class provides an efficient implementation of packet serialization and deserialization with minimal overhead.
+ * It is highly optimized for performance and uses Netty's buffer mechanism for fast byte array manipulation.
+ * <p>
+ *     The default Netty buffer library is not included in the classpath,
+ *     so it needs to be added manually for this strategy to work.
+ * </p>
+ *
+ * @see PacketSerializationStrategy
+ * @see NettyBuffer
+ * @see Unpooled
+ */
+public class NettyBufferPacketSerializationStrategy implements PacketSerializationStrategy {
     @NotNull
     private final NettyBuffer nettyBuffer;
 
-    public NettyBufferSerializationStrategy() {
-        this.nettyBuffer = new NettyBuffer();
+    public NettyBufferPacketSerializationStrategy() {
+        this.nettyBuffer = NettyBuffer.builder()
+                .build();
     }
 
     @Override
@@ -24,7 +38,10 @@ public class NettyBufferSerializationStrategy implements PacketSerializationStra
         packetBuffer.writeByte(packet.id());
         nettyBuffer.serialize(packetBuffer, packet);
 
-        return packetBuffer.array();
+        byte[] bytes = new byte[packetBuffer.writerIndex()];
+        packetBuffer.getBytes(0, bytes);
+
+        return bytes;
     }
 
     @Override

@@ -18,4 +18,6 @@ public interface ByteBufWriter {
     void writeBytes(byte[] bytes);
 
     void writeNull();
+
+    void writeBoolean(boolean b);
 }
