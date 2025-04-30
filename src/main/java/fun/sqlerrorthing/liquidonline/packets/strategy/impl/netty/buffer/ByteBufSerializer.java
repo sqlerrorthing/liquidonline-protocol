@@ -58,6 +58,9 @@ public class ByteBufSerializer {
             writer.writeFloat(f);
         } else if (value instanceof Double d) {
             writer.writeDouble(d);
+        } else if (value instanceof byte[] arr) {
+            writer.writeInt(arr.length);
+            writer.writeBytes(arr);
         }
 
         else if (value.getClass().isArray()) {
