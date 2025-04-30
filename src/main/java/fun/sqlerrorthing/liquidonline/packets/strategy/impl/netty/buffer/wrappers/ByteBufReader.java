@@ -7,6 +7,10 @@ public interface ByteBufReader {
 
     int readInt();
 
+    int readUnsignedVarInt();
+
+    int readSignedVarInt();
+
     double readDouble();
 
     boolean readBoolean();

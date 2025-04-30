@@ -27,6 +27,21 @@ public class ByteBufWriterImpl implements ByteBufWriter {
     }
 
     @Override
+    public void writeSignedVarInt(int i) {
+        int zigZag = (i << 1) ^ (i >> 31);
+        writeUnsignedVarInt(zigZag);
+    }
+
+    @Override
+    public void writeUnsignedVarInt(int i) {
+        while ((i & ~0x7F) != 0) {
+            writeByte((byte) ((i & 0x7F) | 0x80));
+            i >>>= 7;
+        }
+        writeByte((byte) i);
+    }
+
+    @Override
     public void writeNull() {
         writeByte(SharedConstants.NULL_MARKER_BYTE);
     }
@@ -54,7 +69,7 @@ public class ByteBufWriterImpl implements ByteBufWriter {
     @Override
     public void writeString(String s) {
         byte[] bytes = s.getBytes(StandardCharsets.UTF_8);
-        writeInt(bytes.length);
+        writeUnsignedVarInt(bytes.length);
         writeBytes(bytes);
     }
 

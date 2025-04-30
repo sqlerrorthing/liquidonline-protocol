@@ -44,7 +44,7 @@ public class Reader {
         } else if (type.equals(pool.get("java.lang.String"))) {
             addCheckedReadStatement(type, "{0}($1.readString());", nameWithSetterSyntax, sb);
         } else if (type.isEnum()) {
-            addCheckedReadStatement(type, "{0}(%s.values()[$1.readInt()]);".formatted(type.getName()), nameWithSetterSyntax, sb);
+            addCheckedReadStatement(type, "{0}(%s.values()[$1.readUnsignedVarInt()]);".formatted(type.getName()), nameWithSetterSyntax, sb);
         } else if (type.equals(pool.get("java.awt.Color"))) {
             addCheckedReadStatement(type, """
                     {0}(new java.awt.Color(
@@ -68,7 +68,7 @@ public class Reader {
             CtClass component = type.getComponentType();
             if (component.equals(CtClass.byteType)) {
                 addCheckedReadStatement(type, """
-                        byte[] generated = new byte[$1.readInt()];
+                        byte[] generated = new byte[$1.readUnsignedVarInt()];
                         $1.readBytes(generated);
                         {0}(generated);
                         """, nameWithSetterSyntax, sb);
@@ -83,7 +83,7 @@ public class Reader {
             addCheckedReadStatement(type, () -> {
                 sb.append(
                         """
-                        int size = $1.readInt();
+                        int size = $1.readUnsignedVarInt();
                         java.util.List list = new java.util.ArrayList(size);
                         
                         for (int i = 0; i < size; i++) {

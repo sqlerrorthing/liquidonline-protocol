@@ -21,6 +21,10 @@ public interface ByteBufWriter {
 
     void writeBoolean(boolean b);
 
+    void writeSignedVarInt(int i);
+
+    void writeUnsignedVarInt(int i);
+
     default void writeByte(Byte b) {
         writeByte(b.byteValue());
     }
@@ -47,5 +51,13 @@ public interface ByteBufWriter {
 
     default void writeBoolean(Boolean b) {
         writeBoolean(b.booleanValue());
+    }
+
+    default void writeUnsignedVarInt(Integer i) {
+        writeUnsignedVarInt(i.intValue());
+    }
+
+    default void writeSignedVarInt(Integer i) {
+        writeSignedVarInt(i.intValue());
     }
 }

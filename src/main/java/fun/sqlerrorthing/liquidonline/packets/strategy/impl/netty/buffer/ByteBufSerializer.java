@@ -45,7 +45,7 @@ public class ByteBufSerializer {
         } else if (value instanceof Boolean b) {
             writer.writeBoolean(b);
         } else if (value.getClass().isEnum()) {
-            writer.writeInt(((Enum<?>) value).ordinal());
+            writer.writeUnsignedVarInt(((Enum<?>) value).ordinal());
         } else if (value instanceof Long l) {
             writer.writeLong(l);
         } else if (value instanceof Integer i) {
@@ -59,7 +59,7 @@ public class ByteBufSerializer {
         } else if (value instanceof Double d) {
             writer.writeDouble(d);
         } else if (value instanceof byte[] arr) {
-            writer.writeInt(arr.length);
+            writer.writeUnsignedVarInt(arr.length);
             writer.writeBytes(arr);
         }
 
@@ -82,7 +82,7 @@ public class ByteBufSerializer {
 
     private void writeArray(@NotNull ByteBufWriter writer, @NotNull Object value) throws IOException {
         int length = Array.getLength(value);
-        writer.writeInt(length);
+        writer.writeUnsignedVarInt(length);
 
         for (int i = 0; i < length; i++) {
             writeValue(writer, Array.get(value, i));
@@ -90,7 +90,7 @@ public class ByteBufSerializer {
     }
 
     private void writeList(@NotNull ByteBufWriter writer, @NotNull List<?> list) throws IOException {
-        writer.writeInt(list.size());
+        writer.writeUnsignedVarInt(list.size());
         for (var o : list) {
             writeValue(writer, o);
         }

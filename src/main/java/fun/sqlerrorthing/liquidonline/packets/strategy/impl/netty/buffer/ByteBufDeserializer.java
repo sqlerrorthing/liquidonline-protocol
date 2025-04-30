@@ -71,7 +71,7 @@ public class ByteBufDeserializer {
         } else if (type.isEnum()) {
             @SuppressWarnings("unchecked")
             Class<Enum<?>> enumClass = (Class<Enum<?>>) type;
-            int ordinal = buf.readInt();
+            int ordinal = buf.readUnsignedVarInt();
             return enumClass.getEnumConstants()[ordinal];
         } else if (type == Long.class || type == long.class) {
             return buf.readLong();
@@ -90,7 +90,7 @@ public class ByteBufDeserializer {
         if (type.isArray()) {
             assert componentType != null;
             if (componentType == byte.class || componentType == Byte.class) {
-                var length = buf.readInt();
+                var length = buf.readUnsignedVarInt();
                 var bytes = new byte[length];
                 buf.readBytes(bytes);
                 return bytes;
@@ -112,7 +112,7 @@ public class ByteBufDeserializer {
     }
 
     private Object readArray(@NotNull ByteBufReader buf, @NotNull Class<?> componentType) throws IOException {
-        int length = buf.readInt();
+        int length = buf.readUnsignedVarInt();
         Object array = Array.newInstance(componentType, length);
 
         for (int i = 0; i < length; i++) {
@@ -125,7 +125,7 @@ public class ByteBufDeserializer {
 
     private Object readList(ByteBufReader buf, Type[] actualTypeArguments) throws IOException {
         Type listType = actualTypeArguments[0];
-        int size = buf.readInt();
+        int size = buf.readUnsignedVarInt();
 
         List<Object> list = new ArrayList<>(size);
 

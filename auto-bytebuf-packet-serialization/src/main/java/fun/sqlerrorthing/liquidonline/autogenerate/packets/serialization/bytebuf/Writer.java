@@ -42,7 +42,7 @@ public class Writer {
         } else if (type.equals(pool.get("java.lang.String"))) {
             addWriteStatement(type, "$1.writeString({0});", name, sb);
         } else if (type.isEnum()) {
-            addWriteStatement(type, "$1.writeInt({0}.ordinal());", name, sb);
+            addWriteStatement(type, "$1.writeUnsignedVarInt({0}.ordinal());", name, sb);
         } else if (type.equals(pool.get("java.awt.Color"))) {
             addWriteStatement(type, """
                     $1.writeByte((byte) {0}.getRed());
@@ -64,7 +64,7 @@ public class Writer {
             var generic = pool.get(genericType);
 
             sb.append("if (%s != null) {".formatted(name));
-            sb.append("$1.writeInt(%s.size());".formatted(name));
+            sb.append("$1.writeUnsignedVarInt(%s.size());".formatted(name));
 
             sb.append("for (int i = 0; i < %s.size(); i++) {".formatted(name));
             writeField(pool, "%s.get(i)".formatted(name), genericSignature, generic, sb);
@@ -75,7 +75,7 @@ public class Writer {
             CtClass componentType = type.getComponentType();
             if (componentType.equals(CtClass.byteType)) {
                 sb.append("if (%s != null) {".formatted(name));
-                sb.append("$1.writeInt(%s.length);".formatted(name));
+                sb.append("$1.writeUnsignedVarInt(%s.length);".formatted(name));
                 sb.append("$1.writeBytes(%s);".formatted(name));
                 sb.append("} else { $1.writeNull(); }");
             } else {

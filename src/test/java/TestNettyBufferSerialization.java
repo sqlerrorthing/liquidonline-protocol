@@ -6,6 +6,7 @@ import fun.sqlerrorthing.liquidonline.dto.play.PlayDto;
 import fun.sqlerrorthing.liquidonline.dto.play.PositionDto;
 import fun.sqlerrorthing.liquidonline.dto.play.RotationDto;
 import fun.sqlerrorthing.liquidonline.packets.s2c.party.S2CInvitePartyMemberResult;
+import fun.sqlerrorthing.liquidonline.packets.s2c.party.S2CPartyMemberPlayUpdate;
 import fun.sqlerrorthing.liquidonline.packets.s2c.party.S2CPartySync;
 import fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.buffer.NettyBuffer;
 import fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.buffer.NettyBufferPacketSerializationStrategy;
@@ -62,7 +63,22 @@ public class TestNettyBufferSerialization {
     }
 
     public static void main(String[] args) throws IOException {
-        new TestNettyBufferSerialization().testBigPacketSerialization();
+        new TestNettyBufferSerialization().testMiniPacketSerialization();
+    }
+
+    @Test
+    public void testMiniPacketSerialization() throws IOException {
+        var strategy = new CompilerTimeByteBufPacketSerializationStrategy();
+
+        var packet = S2CPartyMemberPlayUpdate.builder()
+                .memberId(20)
+                .data(randomPlayDto())
+                .build();
+
+        var serialized = strategy.serializePacket(packet);
+        var deserialized = strategy.deserializePacket(serialized);
+
+        Assertions.assertEquals(packet, deserialized);
     }
 
     @Test
@@ -102,9 +118,20 @@ public class TestNettyBufferSerialization {
     }
 
     private PartyMemberDto buildDummyPartyMember(int id, String name, String minecraftName, Color color, boolean usePlayData) {
+        return PartyMemberDto.builder()
+                .memberId(id)
+                .username(name)
+                .minecraftUsername(minecraftName)
+                .skin(new byte[] { 22, 21, -23, 111, -10, 32 })
+                .color(color)
+                .playData(usePlayData ? randomPlayDto() : null)
+                .build();
+    }
+
+    private PlayDto randomPlayDto() {
         var random = new Random();
 
-        var playData = PlayDto.builder()
+        return PlayDto.builder()
                 .entityId(random.nextInt())
                 .dimension("minecraft:ownerworld")
                 .server("mc.funtime.su")
@@ -122,15 +149,6 @@ public class TestNettyBufferSerialization {
                         .yaw(random.nextFloat(180))
                         .pitch(random.nextFloat(90))
                         .build())
-                .build();
-
-        return PartyMemberDto.builder()
-                .memberId(id)
-                .username(name)
-                .minecraftUsername(minecraftName)
-                .skin(new byte[] { 22, 21, -23, 111, -10, 32 })
-                .color(color)
-                .playData(usePlayData ? playData : null)
                 .build();
     }
 

@@ -50,6 +50,33 @@ public class ByteBufReaderImpl implements ByteBufReader {
     }
 
     @Override
+    public int readSignedVarInt() {
+        int zigZag = readUnsignedVarInt();
+        return (zigZag >>> 1) ^ - (zigZag & 1);
+    }
+
+    @Override
+    public int readUnsignedVarInt() {
+        int numRead = 0;
+        int result = 0;
+        byte read;
+
+        do {
+            if (numRead >= 5) {
+                throw new RuntimeException("VarInt too big (overflow)");
+            }
+
+            read = readByte();
+            int value = read & 0x7F;
+            result |= (value << (7 * numRead));
+
+            numRead++;
+        } while ((read & 0x80) != 0);
+
+        return result;
+    }
+
+    @Override
     public double readDouble() {
         return byteBuf.readDouble();
     }
@@ -71,9 +98,9 @@ public class ByteBufReaderImpl implements ByteBufReader {
 
     @Override
     public String readString() {
-        int length = byteBuf.readInt();
+        int length = readUnsignedVarInt();
         byte[] bytes = new byte[length];
-        byteBuf.readBytes(bytes);
+        readBytes(bytes);
         return new String(bytes);
     }
 }
