@@ -89,7 +89,14 @@ public class ByteBufDeserializer {
 
         if (type.isArray()) {
             assert componentType != null;
-            return readArray(buf, componentType);
+            if (componentType == byte.class || componentType == Byte.class) {
+                var length = buf.readInt();
+                var bytes = new byte[length];
+                buf.readBytes(bytes);
+                return bytes;
+            } else {
+                return readArray(buf, componentType);
+            }
         }
 
         if (List.class.isAssignableFrom(type)) {
