@@ -141,6 +141,10 @@ public class Reader {
             return;
         } catch (NotFoundException ignored) {}
 
+        if (targetClass.isFrozen()) {
+            targetClass.defrost();
+        }
+
         StringBuilder sb = new StringBuilder();
         sb.append("public static void $read(%s $1, %s $2) {".formatted(bufReader.getName(), type.getName()));
 
@@ -162,6 +166,10 @@ public class Reader {
         var bufWriter = pool.get("fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.buffer.wrappers.ByteBufReader");
         var obj = pool.get("java.lang.Object");
 
+        if (targetClass.isFrozen()) {
+            targetClass.defrost();
+        }
+
         targetClass.removeMethod(targetClass.getDeclaredMethod("$read", new CtClass[] {bufWriter, obj}));
     }
 
@@ -175,6 +183,9 @@ public class Reader {
             return;
         } catch (NotFoundException ignored) {}
 
+        if (targetClass.isFrozen()) {
+            targetClass.defrost();
+        }
 
         CtMethod newMethod = CtNewMethod.make("""
                 public static void $read(%s $1, %s $2) {

@@ -109,6 +109,10 @@ public class Writer {
             return;
         } catch (NotFoundException ignored) {}
 
+        if (targetClass.isFrozen()) {
+            targetClass.defrost();
+        }
+
         CtMethod newMethod = CtNewMethod.make("""
                 public static void $write(%s $1, %s $2) {
                     throw new java.lang.UnsupportedOperationException("Not implemented yet");
@@ -122,6 +126,10 @@ public class Writer {
         var bufWriter = pool.get("fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.buffer.wrappers.ByteBufWriter");
         var obj = pool.get("java.lang.Object");
 
+        if (targetClass.isFrozen()) {
+            targetClass.defrost();
+        }
+
         targetClass.removeMethod(targetClass.getDeclaredMethod("$write", new CtClass[] {bufWriter, obj}));
     }
 
@@ -132,6 +140,10 @@ public class Writer {
             targetClass.getDeclaredMethod("$write", new CtClass[] {bufWriter, type});
             return;
         } catch (NotFoundException ignored) {}
+
+        if (targetClass.isFrozen()) {
+            targetClass.defrost();
+        }
 
         StringBuilder sb = new StringBuilder();
         sb.append("public static void $write(%s $1, %s $2) {".formatted(bufWriter.getName(), type.getName()));
