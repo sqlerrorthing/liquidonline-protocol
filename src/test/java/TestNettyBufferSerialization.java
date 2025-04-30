@@ -7,10 +7,9 @@ import fun.sqlerrorthing.liquidonline.dto.play.PositionDto;
 import fun.sqlerrorthing.liquidonline.dto.play.RotationDto;
 import fun.sqlerrorthing.liquidonline.packets.s2c.party.S2CInvitePartyMemberResult;
 import fun.sqlerrorthing.liquidonline.packets.s2c.party.S2CPartySync;
-import fun.sqlerrorthing.liquidonline.packets.strategy.PacketSerializationStrategy;
-import fun.sqlerrorthing.liquidonline.packets.strategy.impl.jackson.json.JacksonJsonPacketSerializationStrategy;
+import fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.buffer.NettyBuffer;
 import fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.buffer.NettyBufferPacketSerializationStrategy;
-import fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.buffer.buffer.NettyBuffer;
+import fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.compilertime.CompilerTimeByteBufPacketSerializationStrategy;
 import io.netty.buffer.Unpooled;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -62,9 +61,13 @@ public class TestNettyBufferSerialization {
         Assertions.assertEquals(packet, serialized);
     }
 
+    public static void main(String[] args) throws IOException {
+        new TestNettyBufferSerialization().testBigPacketSerialization();
+    }
+
     @Test
     public void testBigPacketSerialization() throws IOException {
-        var strategy = new NettyBufferPacketSerializationStrategy();
+        var strategy = new CompilerTimeByteBufPacketSerializationStrategy();
 
         var members = new ArrayList<PartyMemberDto>();
 

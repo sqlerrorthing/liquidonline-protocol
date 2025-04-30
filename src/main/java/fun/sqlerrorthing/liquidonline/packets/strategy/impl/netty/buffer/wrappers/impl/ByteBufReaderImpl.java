@@ -1,7 +1,7 @@
-package fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.buffer.buffer.wrappers.impl;
+package fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.buffer.wrappers.impl;
 
 import fun.sqlerrorthing.liquidonline.SharedConstants;
-import fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.buffer.buffer.wrappers.ByteBufReader;
+import fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.buffer.wrappers.ByteBufReader;
 import io.netty.buffer.ByteBuf;
 import lombok.AllArgsConstructor;
 
@@ -25,7 +25,7 @@ public class ByteBufReaderImpl implements ByteBufReader {
     }
 
     @Override
-    public Boolean peekIsNullMarker() {
+    public boolean peekIsNullMarker() {
         return peekByte() == SharedConstants.NULL_MARKER_BYTE;
     }
 

@@ -1,8 +1,8 @@
-package fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.buffer.buffer;
+package fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.buffer;
 
-import fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.buffer.buffer.data.BufferDeserializer;
-import fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.buffer.buffer.data.context.BufferDeserializationContext;
-import fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.buffer.buffer.wrappers.ByteBufReader;
+import fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.buffer.data.BufferDeserializer;
+import fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.buffer.data.context.BufferDeserializationContext;
+import fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.buffer.wrappers.ByteBufReader;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

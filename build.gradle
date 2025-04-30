@@ -44,6 +44,19 @@ publishing {
     }
 }
 
+tasks.register('instrumentClasses', JavaExec) {
+    dependsOn compileJava, ':auto-bytebuf-packet-serialization:shadowJar'
+    def instrumenterJar = project(':auto-bytebuf-packet-serialization').file('build/libs/auto-bytebuf-packet-serialization-1.0.0-all.jar')
+
+    setMainClass("fun.sqlerrorthing.liquidonline.autogenerate.packets.serialization.bytebuf.AutoGenerateProcessor")
+    setClasspath(files(instrumenterJar))
+    args(sourceSets.main.output.classesDirs)
+
+    outputs.upToDateWhen { false }
+}
+
+classes.finalizedBy instrumentClasses
+
 tasks.register('printVersion') {
     doLast {
         println version
