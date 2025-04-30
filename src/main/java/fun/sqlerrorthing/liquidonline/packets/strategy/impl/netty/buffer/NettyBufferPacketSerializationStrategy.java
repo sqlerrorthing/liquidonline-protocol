@@ -30,7 +30,7 @@ public class NettyBufferPacketSerializationStrategy implements PacketSerializati
     }
 
     @Override
-    public byte @NotNull [] deserializePacket(@NotNull Packet packet) throws IOException {
+    public byte @NotNull [] serializePacket(@NotNull Packet packet) throws IOException {
         var packetBuffer = Unpooled.buffer();
 
         packetBuffer.writeByte(packet.id());
@@ -43,8 +43,8 @@ public class NettyBufferPacketSerializationStrategy implements PacketSerializati
     }
 
     @Override
-    public @NotNull Packet serializePacket(byte @NotNull [] deserializedPacket) throws IOException {
-        var packetBuffer = Unpooled.wrappedBuffer(deserializedPacket);
+    public @NotNull Packet deserializePacket(byte @NotNull [] serializedPacket) throws IOException {
+        var packetBuffer = Unpooled.wrappedBuffer(serializedPacket);
 
         byte id = packetBuffer.readByte();
         var packetClazz = Packets.PACKETS_WITH_ID.get(id);

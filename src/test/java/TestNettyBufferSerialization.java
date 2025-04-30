@@ -55,10 +55,10 @@ public class TestNettyBufferSerialization {
                 .result(S2CInvitePartyMemberResult.Result.INVITED)
                 .build();
 
-        var deserialized = strategy.deserializePacket(packet);
-        var serialized = strategy.serializePacket(deserialized);
+        var serialized = strategy.serializePacket(packet);
+        var deserialized = strategy.deserializePacket(serialized);
 
-        Assertions.assertEquals(packet, serialized);
+        Assertions.assertEquals(packet, deserialized);
     }
 
     public static void main(String[] args) throws IOException {
@@ -95,10 +95,10 @@ public class TestNettyBufferSerialization {
                 .party(dummyParty)
                 .build();
 
-        var deserialized = strategy.deserializePacket(packet);
-        var serialized = strategy.serializePacket(deserialized);
+        var serialized = strategy.serializePacket(packet);
+        var deserialized = strategy.deserializePacket(serialized);
 
-        Assertions.assertEquals(packet, serialized);
+        Assertions.assertEquals(packet, deserialized);
     }
 
     private PartyMemberDto buildDummyPartyMember(int id, String name, String minecraftName, Color color, boolean usePlayData) {

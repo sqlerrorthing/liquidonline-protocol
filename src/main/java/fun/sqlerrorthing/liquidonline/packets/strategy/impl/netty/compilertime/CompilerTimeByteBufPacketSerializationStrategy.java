@@ -12,7 +12,7 @@ import java.io.IOException;
 
 public class CompilerTimeByteBufPacketSerializationStrategy implements PacketSerializationStrategy {
     @Override
-    public byte @NotNull [] deserializePacket(@NotNull Packet packet) throws IOException {
+    public byte @NotNull [] serializePacket(@NotNull Packet packet) throws IOException {
         try {
             if (packet instanceof PacketSerializable serialization) {
                 var byteBuffer = Unpooled.buffer();
@@ -33,8 +33,8 @@ public class CompilerTimeByteBufPacketSerializationStrategy implements PacketSer
     }
 
     @Override
-    public @NotNull Packet serializePacket(byte @NotNull [] deserializedPacket) throws IOException {
-        var buffer = Unpooled.wrappedBuffer(deserializedPacket);
+    public @NotNull Packet deserializePacket(byte @NotNull [] serializedPacket) throws IOException {
+        var buffer = Unpooled.wrappedBuffer(serializedPacket);
         var reader = new ByteBufReaderImpl(buffer);
 
         byte id = reader.readByte();
