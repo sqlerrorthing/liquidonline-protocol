@@ -25,7 +25,7 @@ public class ByteBufReaderImpl implements ByteBufReader {
     }
 
     @Override
-    public Boolean peekIsNullMarker() {
+    public boolean peekIsNullMarker() {
         return peekByte() == SharedConstants.NULL_MARKER_BYTE;
     }
 

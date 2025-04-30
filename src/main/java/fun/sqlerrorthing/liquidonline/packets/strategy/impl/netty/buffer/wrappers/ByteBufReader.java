@@ -17,7 +17,7 @@ public interface ByteBufReader {
 
     byte peekByte();
 
-    Boolean peekIsNullMarker();
+    boolean peekIsNullMarker();
 
     void skipBytes(int bytes);
 
