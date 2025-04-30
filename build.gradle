@@ -25,6 +25,13 @@ dependencies {
 
     compileOnly 'org.msgpack:msgpack-core:0.9.9'
 
+    compileOnly 'io.netty:netty-buffer:4.2.0.Final'
+
+    testImplementation 'io.netty:netty-buffer:4.2.0.Final'
+    testImplementation 'com.fasterxml.jackson.core:jackson-databind:2.19.0'
+    testImplementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.19.0'
+    testImplementation 'org.msgpack:jackson-dataformat-msgpack:0.9.9'
+
     compileOnly 'org.projectlombok:lombok:1.18.38'
     annotationProcessor 'org.projectlombok:lombok:1.18.38'
 }
@@ -36,6 +43,19 @@ publishing {
         }
     }
 }
+
+tasks.register('instrumentClasses', JavaExec) {
+    dependsOn compileJava, ':auto-bytebuf-packet-serialization:shadowJar'
+    def instrumenterJar = project(':auto-bytebuf-packet-serialization').file('build/libs/auto-bytebuf-packet-serialization-1.0.0-all.jar')
+
+    setMainClass("fun.sqlerrorthing.liquidonline.autogenerate.packets.serialization.bytebuf.AutoGenerateProcessor")
+    setClasspath(files(instrumenterJar))
+    args(sourceSets.main.output.classesDirs)
+
+    outputs.upToDateWhen { false }
+}
+
+classes.finalizedBy instrumentClasses
 
 tasks.register('printVersion') {
     doLast {
