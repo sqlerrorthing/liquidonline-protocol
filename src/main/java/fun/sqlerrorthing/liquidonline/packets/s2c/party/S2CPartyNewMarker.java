@@ -4,6 +4,7 @@ import fun.sqlerrorthing.liquidonline.dto.play.MarkerDto;
 import fun.sqlerrorthing.liquidonline.packets.Packet;
 import fun.sqlerrorthing.liquidonline.packets.PacketBound;
 import fun.sqlerrorthing.liquidonline.packets.SerializedName;
+import fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.compilertime.UnsignedNumber;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
@@ -24,6 +25,7 @@ public class S2CPartyNewMarker implements Packet {
      * The ID of the player who set the marker.
      */
     @SerializedName("i")
+    @UnsignedNumber
     int memberId;
 
     /**

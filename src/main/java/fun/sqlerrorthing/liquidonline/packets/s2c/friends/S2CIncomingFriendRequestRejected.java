@@ -3,6 +3,7 @@ package fun.sqlerrorthing.liquidonline.packets.s2c.friends;
 import fun.sqlerrorthing.liquidonline.packets.Packet;
 import fun.sqlerrorthing.liquidonline.packets.PacketBound;
 import fun.sqlerrorthing.liquidonline.packets.SerializedName;
+import fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.compilertime.UnsignedNumber;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -27,6 +28,7 @@ public class S2CIncomingFriendRequestRejected implements Packet {
     String from;
 
     @SerializedName("i")
+    @UnsignedNumber
     int requestId;
 
     @Override

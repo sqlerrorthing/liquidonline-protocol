@@ -1,6 +1,7 @@
 package fun.sqlerrorthing.liquidonline.dto;
 
 import fun.sqlerrorthing.liquidonline.packets.SerializedName;
+import fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.compilertime.UnsignedNumber;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
@@ -25,6 +26,7 @@ public class FriendRequestDto {
      * <p>Must not be {@code null}.</p>
      */
     @SerializedName("i")
+    @UnsignedNumber
     int requestId;
 
     /**

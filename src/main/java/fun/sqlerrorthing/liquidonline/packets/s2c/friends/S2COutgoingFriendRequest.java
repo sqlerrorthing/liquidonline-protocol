@@ -4,6 +4,7 @@ import fun.sqlerrorthing.liquidonline.dto.FriendDto;
 import fun.sqlerrorthing.liquidonline.packets.Packet;
 import fun.sqlerrorthing.liquidonline.packets.PacketBound;
 import fun.sqlerrorthing.liquidonline.packets.SerializedName;
+import fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.compilertime.UnsignedNumber;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -21,6 +22,7 @@ import org.jetbrains.annotations.Nullable;
 @NoArgsConstructor
 public class S2COutgoingFriendRequest implements Packet {
     @SerializedName("i")
+    @UnsignedNumber
     int requestId;
 
     /**

@@ -1,6 +1,7 @@
 package fun.sqlerrorthing.liquidonline.dto.play;
 
 import fun.sqlerrorthing.liquidonline.packets.SerializedName;
+import fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.compilertime.UnsignedNumber;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
@@ -33,5 +34,6 @@ public class MarkerDto {
      */
     @SerializedName("b")
     @Nullable
+    @UnsignedNumber
     Integer entityId;
 }
