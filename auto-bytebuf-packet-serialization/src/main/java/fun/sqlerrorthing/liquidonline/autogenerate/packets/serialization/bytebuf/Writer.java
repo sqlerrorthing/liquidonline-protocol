@@ -4,6 +4,7 @@ import javassist.*;
 import javassist.bytecode.SignatureAttribute;
 
 import java.text.MessageFormat;
+import java.util.function.Function;
 
 import static fun.sqlerrorthing.liquidonline.autogenerate.packets.serialization.bytebuf.AutoGenerateProcessor.HELPER;
 
@@ -15,7 +16,14 @@ public class Writer {
         createTempWriteObjectMethod(pool, HELPER);
 
         for (var field : clazz.getDeclaredFields()) {
-            writeField(pool, field.getName(), field.getGenericSignature(), field.getType(), sb);
+            writeField(
+                    pool,
+                    field.getName(),
+                    field.getGenericSignature(),
+                    field.getType(),
+                    sb,
+                    field::hasAnnotation
+            );
         }
 
         deleteTempWriteObjectMethod(pool, HELPER);
@@ -24,11 +32,18 @@ public class Writer {
         return sb;
     }
 
-    private static void writeField(ClassPool pool, String name, String genericSignature, CtClass type, StringBuilder sb) throws Exception {
+    private static void writeField(
+            ClassPool pool,
+            String name,
+            String genericSignature,
+            CtClass type,
+            StringBuilder sb,
+            Function<String, Boolean> hasFieldAnnotation
+    ) throws Exception {
         if (type.equals(CtClass.intType) || type.equals(pool.get("java.lang.Integer"))) {
-            addWriteStatement(type, "$1.writeInt({0});", name, sb);
+            addWriteStatement(type, generateNumberWriteStatement("Int", hasFieldAnnotation), name, sb);
         } else if (type.equals(CtClass.shortType) || type.equals(pool.get("java.lang.Short"))) {
-            addWriteStatement(type, "$1.writeShort({0});", name, sb);
+            addWriteStatement(type, generateNumberWriteStatement("Short", hasFieldAnnotation), name, sb);
         } else if (type.equals(CtClass.byteType) || type.equals(pool.get("java.lang.Byte"))) {
             addWriteStatement(type, "$1.writeByte({0});", name, sb);
         } else if (type.equals(CtClass.booleanType) || type.equals(pool.get("java.lang.Boolean"))) {
@@ -38,7 +53,7 @@ public class Writer {
         } else if (type.equals(CtClass.floatType) || type.equals(pool.get("java.lang.Float"))) {
             addWriteStatement(type, "$1.writeFloat({0});", name, sb);
         } else if (type.equals(CtClass.longType) || type.equals(pool.get("java.lang.Long"))) {
-            addWriteStatement(type, "$1.writeLong({0});", name, sb);
+            addWriteStatement(type, generateNumberWriteStatement("Long", hasFieldAnnotation), name, sb);
         } else if (type.equals(pool.get("java.lang.String"))) {
             addWriteStatement(type, "$1.writeString({0});", name, sb);
         } else if (type.isEnum()) {
@@ -67,7 +82,7 @@ public class Writer {
             sb.append("$1.writeUnsignedVarInt(%s.size());".formatted(name));
 
             sb.append("for (int i = 0; i < %s.size(); i++) {".formatted(name));
-            writeField(pool, "%s.get(i)".formatted(name), genericSignature, generic, sb);
+            writeField(pool, "%s.get(i)".formatted(name), genericSignature, generic, sb, (n) -> false);
             sb.append("}");
 
             sb.append("} else { $1.writeNull(); };");
@@ -88,6 +103,15 @@ public class Writer {
             sb.append("%s.$write($1, (%s) %s);".formatted(HELPER.getName(), type.getName(), name));
             sb.append("} else { $1.writeNull(); }");
         }
+    }
+
+    private static String generateNumberWriteStatement(
+            String unit,
+            Function<String, Boolean> hasAnnotation
+    ) {
+        var unsignedAddition = hasAnnotation.apply("fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.compilertime.UnsignedNumber")
+                ? "UnsignedVar" : "";
+        return "$1.write%s%s({0});".formatted(unsignedAddition, unit);
     }
 
     private static void addWriteStatement(CtClass type, String statement, String name, StringBuilder sb) {
@@ -149,7 +173,14 @@ public class Writer {
         sb.append("public static void $write(%s $1, %s $2) {".formatted(bufWriter.getName(), type.getName()));
 
         for (var field : type.getDeclaredFields()) {
-            writeField(pool, "$2." + toGetterName(field.getType(), field.getName()) + "()", field.getGenericSignature(), field.getType(), sb);
+            writeField(
+                    pool,
+                    "$2." + toGetterName(field.getType(), field.getName()) + "()",
+                    field.getGenericSignature(),
+                    field.getType(),
+                    sb,
+                    field::hasAnnotation
+            );
         }
 
         sb.append("};");

@@ -3,14 +3,15 @@ package fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.buffer;
 import fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.buffer.data.BufferDeserializer;
 import fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.buffer.data.context.BufferDeserializationContext;
 import fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.buffer.wrappers.ByteBufReader;
+import fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.compilertime.UnsignedNumber;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
+import java.lang.annotation.Annotation;
 import java.lang.reflect.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.function.Supplier;
 
 public class ByteBufDeserializer {
     @NotNull
@@ -46,9 +47,9 @@ public class ByteBufDeserializer {
         Class<?> type = field.getType();
 
         if (field.getGenericType() instanceof ParameterizedType parameterizedType) {
-            return readValue(buf, type, parameterizedType.getActualTypeArguments(), type.componentType());
+            return readValue(buf, type, field.getDeclaredAnnotations(), parameterizedType.getActualTypeArguments(), type.componentType());
         } else {
-            return readValue(buf, type, null, type.componentType());
+            return readValue(buf, type, field.getDeclaredAnnotations(), null, type.componentType());
         }
     }
 
@@ -56,6 +57,7 @@ public class ByteBufDeserializer {
     private Object readValue(
             @NotNull ByteBufReader buf,
             @NotNull Class<?> type,
+            @NotNull Annotation[] annotations,
             @Nullable Type[] actualTypeArguments,
             @Nullable Class<?> componentType
     ) throws IOException {
@@ -74,11 +76,23 @@ public class ByteBufDeserializer {
             int ordinal = buf.readUnsignedVarInt();
             return enumClass.getEnumConstants()[ordinal];
         } else if (type == Long.class || type == long.class) {
-            return buf.readLong();
+            return readAsUnsignedIfUnsignedAnnotationPreset(
+                    buf::readUnsignedVarLong,
+                    buf::readLong,
+                    annotations
+            );
         } else if (type == Integer.class || type == int.class) {
-            return buf.readInt();
+            return readAsUnsignedIfUnsignedAnnotationPreset(
+                    buf::readUnsignedVarInt,
+                    buf::readInt,
+                    annotations
+            );
         } else if (type == Short.class || type == short.class) {
-            return buf.readShort();
+            return readAsUnsignedIfUnsignedAnnotationPreset(
+                    buf::readUnsignedVarShort,
+                    buf::readShort,
+                    annotations
+            );
         } else if (type == Byte.class || type == byte.class) {
             return buf.readByte();
         } else if (type == Double.class || type == double.class) {
@@ -111,12 +125,29 @@ public class ByteBufDeserializer {
         return deserialize(buf, type);
     }
 
+    private <T> T readAsUnsignedIfUnsignedAnnotationPreset(
+            Supplier<T> readUnsigned,
+            Supplier<T> readSigned,
+            Annotation[] annotations
+    ) {
+        Optional<UnsignedNumber> unsigned = Arrays.stream(annotations)
+                .filter(a -> a.annotationType().equals(UnsignedNumber.class))
+                .map(a -> (UnsignedNumber) a)
+                .findFirst();
+
+        if (unsigned.isPresent()) {
+            return readUnsigned.get();
+        } else {
+            return readSigned.get();
+        }
+    }
+
     private Object readArray(@NotNull ByteBufReader buf, @NotNull Class<?> componentType) throws IOException {
         int length = buf.readUnsignedVarInt();
         Object array = Array.newInstance(componentType, length);
 
         for (int i = 0; i < length; i++) {
-            Object element = readValue(buf, componentType, null, componentType.componentType());
+            Object element = readValue(buf, componentType, new Annotation[0], null, componentType.componentType());
             Array.set(array, i, element);
         }
 
@@ -134,10 +165,10 @@ public class ByteBufDeserializer {
 
             if (listType instanceof ParameterizedType parameterizedType) {
                 var rawType = (Class<?>) parameterizedType.getRawType();
-                element = readValue(buf, rawType, parameterizedType.getActualTypeArguments(), rawType.componentType());
+                element = readValue(buf, rawType, new Annotation[0], parameterizedType.getActualTypeArguments(), rawType.componentType());
             } else {
                 var rawType = (Class<?>) listType;
-                element = readValue(buf, rawType, null, rawType.componentType());
+                element = readValue(buf, rawType, new Annotation[0], null, rawType.componentType());
             }
 
             list.add(element);

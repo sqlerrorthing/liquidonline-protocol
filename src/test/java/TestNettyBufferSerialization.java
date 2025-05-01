@@ -63,12 +63,12 @@ public class TestNettyBufferSerialization {
     }
 
     public static void main(String[] args) throws IOException {
-        new TestNettyBufferSerialization().testMiniPacketSerialization();
+        new TestNettyBufferSerialization().testBigPacketSerialization();
     }
 
     @Test
     public void testMiniPacketSerialization() throws IOException {
-        var strategy = new CompilerTimeByteBufPacketSerializationStrategy();
+        var strategy = new NettyBufferPacketSerializationStrategy();
 
         var packet = S2CPartyMemberPlayUpdate.builder()
                 .memberId(20)

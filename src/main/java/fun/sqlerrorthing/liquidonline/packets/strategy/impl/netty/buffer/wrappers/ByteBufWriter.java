@@ -25,6 +25,10 @@ public interface ByteBufWriter {
 
     void writeUnsignedVarInt(int i);
 
+    void writeUnsignedVarShort(short i);
+
+    void writeUnsignedVarLong(long l);
+
     default void writeByte(Byte b) {
         writeByte(b.byteValue());
     }
@@ -59,5 +63,13 @@ public interface ByteBufWriter {
 
     default void writeSignedVarInt(Integer i) {
         writeSignedVarInt(i.intValue());
+    }
+
+    default void writeUnsignedVarShort(Short i) {
+        writeUnsignedVarShort(i.shortValue());
+    }
+
+    default void writeUnsignedVarLong(Long l) {
+        writeUnsignedVarLong(l.longValue());
     }
 }
