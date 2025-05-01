@@ -3,6 +3,7 @@ package fun.sqlerrorthing.liquidonline.packets.c2s.friends;
 import fun.sqlerrorthing.liquidonline.packets.Packet;
 import fun.sqlerrorthing.liquidonline.packets.PacketBound;
 import fun.sqlerrorthing.liquidonline.packets.SerializedName;
+import fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.compilertime.UnsignedNumber;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -22,6 +23,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 public class C2SRespondFriendRequest implements Packet {
     @SerializedName("r")
+    @UnsignedNumber
     int requestId;
 
     /**

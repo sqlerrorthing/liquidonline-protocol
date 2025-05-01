@@ -77,6 +77,52 @@ public class ByteBufReaderImpl implements ByteBufReader {
     }
 
     @Override
+    public short readUnsignedVarShort() {
+        int numRead = 0;
+        int result = 0;
+        byte read;
+
+        do {
+            if (numRead >= 3) {
+                throw new RuntimeException("VarShort too big (overflow)");
+            }
+
+            read = readByte();
+            int value = read & 0x7F;
+            result |= (value << (7 * numRead));
+
+            numRead++;
+        } while ((read & 0x80) != 0);
+
+        if (result > 0xFFFF) {
+            throw new RuntimeException("VarShort overflow (exceeds unsigned short)");
+        }
+
+        return (short) result;
+    }
+
+    @Override
+    public long readUnsignedVarLong() {
+        int numRead = 0;
+        long result = 0;
+        byte read;
+
+        do {
+            if (numRead >= 10) {
+                throw new RuntimeException("VarLong too big (overflow)");
+            }
+
+            read = readByte();
+            long value = read & 0x7F;
+            result |= (value << (7 * numRead));
+
+            numRead++;
+        } while ((read & 0x80) != 0);
+
+        return result;
+    }
+
+    @Override
     public double readDouble() {
         return byteBuf.readDouble();
     }

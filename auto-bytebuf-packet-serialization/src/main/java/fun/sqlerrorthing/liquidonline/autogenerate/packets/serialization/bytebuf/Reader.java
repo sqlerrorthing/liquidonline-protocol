@@ -5,6 +5,7 @@ import javassist.bytecode.BadBytecode;
 import javassist.bytecode.SignatureAttribute;
 
 import java.text.MessageFormat;
+import java.util.function.Function;
 
 import static fun.sqlerrorthing.liquidonline.autogenerate.packets.serialization.bytebuf.AutoGenerateProcessor.HELPER;
 
@@ -16,7 +17,14 @@ public class Reader {
         createTempReadObjectMethod(pool, HELPER);
 
         for (var field : clazz.getDeclaredFields()) {
-            readField(pool, toSetterName(field.getName()), field.getGenericSignature(), field.getType(), sb);
+            readField(
+                    pool,
+                    toSetterName(field.getName()),
+                    field.getGenericSignature(),
+                    field.getType(),
+                    sb,
+                    field::hasAnnotation
+            );
         }
 
         deleteTempReadObjectMethod(pool, HELPER);
@@ -25,12 +33,18 @@ public class Reader {
         return sb;
     }
 
-    private static void readField(ClassPool pool, String nameWithSetterSyntax, String genericSignature, CtClass type, StringBuilder sb) throws NotFoundException, CannotCompileException, BadBytecode {
+    private static void readField(
+            ClassPool pool,
+            String nameWithSetterSyntax,
+            String genericSignature,
+            CtClass type,
+            StringBuilder sb,
+            Function<String, Boolean> hasFieldAnnotation
+    ) throws NotFoundException, CannotCompileException, BadBytecode {
         if (type.equals(CtClass.intType) || type.equals(pool.get("java.lang.Integer"))) {
-            var state = type.equals(pool.get("java.lang.Integer")) ? "java.lang.Integer.valueOf($1.readInt())" : "$1.readInt()";
-            addCheckedReadStatement(type, "{0}(%s);".formatted(state), nameWithSetterSyntax, sb);
+            addCheckedReadStatement(type, generateNumberReadStatement("Int", "java.lang.Integer", type.isPrimitive(), hasFieldAnnotation), nameWithSetterSyntax, sb);
         } else if (type.equals(CtClass.shortType) || type.equals(pool.get("java.lang.Short"))) {
-            addCheckedReadStatement(type, "{0}($1.readShort());", nameWithSetterSyntax, sb);
+            addCheckedReadStatement(type, generateNumberReadStatement("Short", "java.lang.Short", type.isPrimitive(), hasFieldAnnotation), nameWithSetterSyntax, sb);
         } else if (type.equals(CtClass.byteType) || type.equals(pool.get("java.lang.Byte"))) {
             addCheckedReadStatement(type, "{0}($1.readByte());", nameWithSetterSyntax, sb);
         } else if (type.equals(CtClass.booleanType) || type.equals(pool.get("java.lang.Boolean"))) {
@@ -40,7 +54,7 @@ public class Reader {
         } else if (type.equals(CtClass.floatType) || type.equals(pool.get("java.lang.Float"))) {
             addCheckedReadStatement(type, "{0}($1.readFloat());", nameWithSetterSyntax, sb);
         } else if (type.equals(CtClass.longType) || type.equals(pool.get("java.lang.Long"))) {
-            addCheckedReadStatement(type, "{0}($1.readLong());", nameWithSetterSyntax, sb);
+            addCheckedReadStatement(type, generateNumberReadStatement("Long", "java.lang.Long", type.isPrimitive(), hasFieldAnnotation), nameWithSetterSyntax, sb);
         } else if (type.equals(pool.get("java.lang.String"))) {
             addCheckedReadStatement(type, "{0}($1.readString());", nameWithSetterSyntax, sb);
         } else if (type.isEnum()) {
@@ -91,7 +105,7 @@ public class Reader {
                 );
 
                 try {
-                    readField(pool, "list.add", generic.getGenericSignature(), generic, sb);
+                    readField(pool, "list.add", generic.getGenericSignature(), generic, sb, (n) -> false);
                 } catch (NotFoundException | CannotCompileException | BadBytecode e) {
                     throw new RuntimeException(e);
                 }
@@ -113,6 +127,22 @@ public class Reader {
                     %s.$read($1, generated);
                     {0}(generated);
                     """.formatted(type.getName(), type.getName(), HELPER.getName()), nameWithSetterSyntax, sb);
+        }
+    }
+
+    private static String generateNumberReadStatement(
+            String unit,
+            String unitClass,
+            Boolean isPrimitive,
+            Function<String, Boolean> hasAnnotation
+    ) {
+        var unsignedAddition = hasAnnotation.apply("fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.compilertime.UnsignedNumber")
+                ? "UnsignedVar" : "";
+
+        if (isPrimitive) {
+            return "{0}($1.read%s%s());".formatted(unsignedAddition, unit);
+        } else {
+            return "{0}(%s.valueOf($1.read%s%s()));".formatted(unitClass, unsignedAddition, unit);
         }
     }
 
@@ -149,7 +179,14 @@ public class Reader {
         sb.append("public static void $read(%s $1, %s $2) {".formatted(bufReader.getName(), type.getName()));
 
         for (var field : type.getDeclaredFields()) {
-            readField(pool, "$2." + toSetterName(field.getName()), field.getGenericSignature(), field.getType(), sb);
+            readField(
+                    pool,
+                    "$2." + toSetterName(field.getName()),
+                    field.getGenericSignature(),
+                    field.getType(),
+                    sb,
+                    field::hasAnnotation
+            );
         }
 
         sb.append("};");

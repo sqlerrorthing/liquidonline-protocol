@@ -4,6 +4,7 @@ import fun.sqlerrorthing.liquidonline.dto.play.PlayDto;
 import fun.sqlerrorthing.liquidonline.packets.Packet;
 import fun.sqlerrorthing.liquidonline.packets.PacketBound;
 import fun.sqlerrorthing.liquidonline.packets.SerializedName;
+import fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.compilertime.UnsignedNumber;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
@@ -28,6 +29,7 @@ public class S2CPartyMemberPlayUpdate implements Packet {
      * The ID of the party member whose play data was updated.
      */
     @SerializedName("i")
+    @UnsignedNumber
     int memberId;
 
     /**

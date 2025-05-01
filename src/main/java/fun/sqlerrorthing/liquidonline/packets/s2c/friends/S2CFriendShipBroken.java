@@ -3,6 +3,7 @@ package fun.sqlerrorthing.liquidonline.packets.s2c.friends;
 import fun.sqlerrorthing.liquidonline.packets.Packet;
 import fun.sqlerrorthing.liquidonline.packets.PacketBound;
 import fun.sqlerrorthing.liquidonline.packets.SerializedName;
+import fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.compilertime.UnsignedNumber;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
@@ -22,6 +23,7 @@ public class S2CFriendShipBroken implements Packet {
      * Contains the id of a friend (former).
      */
     @SerializedName("i")
+    @UnsignedNumber
     int with;
 
     @Override

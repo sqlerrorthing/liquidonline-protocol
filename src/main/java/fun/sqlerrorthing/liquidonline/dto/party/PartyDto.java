@@ -1,6 +1,7 @@
 package fun.sqlerrorthing.liquidonline.dto.party;
 
 import fun.sqlerrorthing.liquidonline.packets.SerializedName;
+import fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.compilertime.UnsignedNumber;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
@@ -52,6 +53,7 @@ public class PartyDto {
      * The max members of the party.
      */
     @SerializedName("g")
+    @UnsignedNumber
     int maxMembers;
 
     /**
@@ -62,6 +64,7 @@ public class PartyDto {
      * </p>
      */
     @SerializedName("d")
+    @UnsignedNumber
     int ownerId;
 
     /**

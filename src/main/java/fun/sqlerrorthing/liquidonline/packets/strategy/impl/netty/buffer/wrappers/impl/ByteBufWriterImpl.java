@@ -33,6 +33,26 @@ public class ByteBufWriterImpl implements ByteBufWriter {
     }
 
     @Override
+    public void writeUnsignedVarShort(short i) {
+        int value = i & 0xFFFF;
+
+        while ((value & ~0x7F) != 0) {
+            writeByte((byte) ((value & 0x7F) | 0x80));
+            value >>>= 7;
+        }
+        writeByte((byte) value);
+    }
+
+    @Override
+    public void writeUnsignedVarLong(long value) {
+        while ((value & ~0x7FL) != 0) {
+            writeByte((byte) ((value & 0x7F) | 0x80));
+            value >>>= 7;
+        }
+        writeByte((byte) value);
+    }
+
+    @Override
     public void writeUnsignedVarInt(int i) {
         while ((i & ~0x7F) != 0) {
             writeByte((byte) ((i & 0x7F) | 0x80));

@@ -3,6 +3,7 @@ package fun.sqlerrorthing.liquidonline.packets.s2c.friends;
 import fun.sqlerrorthing.liquidonline.packets.Packet;
 import fun.sqlerrorthing.liquidonline.packets.PacketBound;
 import fun.sqlerrorthing.liquidonline.packets.SerializedName;
+import fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.compilertime.UnsignedNumber;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
@@ -26,6 +27,7 @@ public class S2CFriendRequestResult implements Packet {
 
     @SerializedName("9")
     @Nullable
+    @UnsignedNumber
     Integer requestId;
 
     public enum Status {

@@ -3,13 +3,17 @@ package fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.buffer;
 import fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.buffer.data.BufferSerializer;
 import fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.buffer.data.context.BufferSerializationContext;
 import fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.buffer.wrappers.ByteBufWriter;
+import fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.compilertime.UnsignedNumber;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
+import java.lang.annotation.Annotation;
 import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public class ByteBufSerializer {
     @NotNull
@@ -29,7 +33,7 @@ public class ByteBufSerializer {
 
             try {
                 Object value = field.get(obj);
-                writeValue(writer, value);
+                writeValue(field.getDeclaredAnnotations(), writer, value);
             } catch (IllegalAccessException e) {
                 throw new RuntimeException(e);
             }
@@ -37,7 +41,7 @@ public class ByteBufSerializer {
     }
 
     @SuppressWarnings("unchecked")
-    private void writeValue(@NotNull ByteBufWriter writer, @Nullable Object value) throws IOException {
+    private void writeValue(@NotNull Annotation[] fieldAnnotations, @NotNull ByteBufWriter writer, @Nullable Object value) throws IOException {
         if (value == null) {
             writer.writeNull();
         } else if (value instanceof String s) {
@@ -47,11 +51,23 @@ public class ByteBufSerializer {
         } else if (value.getClass().isEnum()) {
             writer.writeUnsignedVarInt(((Enum<?>) value).ordinal());
         } else if (value instanceof Long l) {
-            writer.writeLong(l);
+            writeAsUnsignedIfUnsignedAnnotationPreset(
+                    () -> writer.writeUnsignedVarLong(l),
+                    () -> writer.writeLong(l),
+                    fieldAnnotations
+            );
         } else if (value instanceof Integer i) {
-            writer.writeInt(i);
+            writeAsUnsignedIfUnsignedAnnotationPreset(
+                    () -> writer.writeUnsignedVarInt(i),
+                    () -> writer.writeInt(i),
+                    fieldAnnotations
+            );
         } else if (value instanceof Short s) {
-            writer.writeShort(s);
+            writeAsUnsignedIfUnsignedAnnotationPreset(
+                    () -> writer.writeUnsignedVarShort(s),
+                    () -> writer.writeShort(s),
+                    fieldAnnotations
+            );
         } else if (value instanceof Byte b) {
             writer.writeByte(b);
         } else if (value instanceof Float f) {
@@ -80,19 +96,36 @@ public class ByteBufSerializer {
         }
     }
 
+    private void writeAsUnsignedIfUnsignedAnnotationPreset(
+            Runnable writeUnsigned,
+            Runnable writeSigned,
+            Annotation[] annotations
+    ) {
+        Optional<UnsignedNumber> unsigned = Arrays.stream(annotations)
+                .filter(a -> a.annotationType().equals(UnsignedNumber.class))
+                .map(a -> (UnsignedNumber) a)
+                .findFirst();
+
+        if (unsigned.isPresent()) {
+            writeUnsigned.run();
+        } else {
+            writeSigned.run();
+        }
+    }
+
     private void writeArray(@NotNull ByteBufWriter writer, @NotNull Object value) throws IOException {
         int length = Array.getLength(value);
         writer.writeUnsignedVarInt(length);
 
         for (int i = 0; i < length; i++) {
-            writeValue(writer, Array.get(value, i));
+            writeValue(new Annotation[0], writer, Array.get(value, i));
         }
     }
 
     private void writeList(@NotNull ByteBufWriter writer, @NotNull List<?> list) throws IOException {
         writer.writeUnsignedVarInt(list.size());
         for (var o : list) {
-            writeValue(writer, o);
+            writeValue(new Annotation[0], writer, o);
         }
     }
 
