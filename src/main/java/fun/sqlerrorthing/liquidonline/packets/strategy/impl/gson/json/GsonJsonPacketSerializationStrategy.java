@@ -7,6 +7,7 @@ import com.google.gson.JsonParser;
 import fun.sqlerrorthing.liquidonline.packets.Packet;
 import fun.sqlerrorthing.liquidonline.packets.Packets;
 import fun.sqlerrorthing.liquidonline.packets.strategy.PacketSerializationStrategy;
+import fun.sqlerrorthing.liquidonline.packets.strategy.impl.gson.json.adapters.ByteArrayBase64Adapter;
 import fun.sqlerrorthing.liquidonline.packets.strategy.impl.gson.json.adapters.ColorAdapter;
 import fun.sqlerrorthing.liquidonline.packets.strategy.impl.gson.json.adapters.InstantTimeAdapter;
 import fun.sqlerrorthing.liquidonline.packets.strategy.impl.gson.json.strategy.SerializedFieldName;
@@ -52,6 +53,7 @@ public class GsonJsonPacketSerializationStrategy implements PacketSerializationS
                 .setFieldNamingStrategy(new SerializedFieldName())
                 .registerTypeAdapter(Color.class, new ColorAdapter())
                 .registerTypeAdapter(Instant.class, new InstantTimeAdapter())
+                .registerTypeAdapter(byte[].class, new ByteArrayBase64Adapter())
                 .create();
     }
 

@@ -9,7 +9,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
 import java.lang.annotation.Annotation;
-import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -78,9 +77,8 @@ public class ByteBufSerializer {
             writer.writeUnsignedVarInt(arr.length);
             writer.writeBytes(arr);
         }
-
         else if (value.getClass().isArray()) {
-            writeArray(writer, value);
+            throw new UnsupportedOperationException("Not implemented yet.");
         } else if (value instanceof List<?> l) {
             writeList(writer, l);
         } else {
@@ -110,15 +108,6 @@ public class ByteBufSerializer {
             writeUnsigned.run();
         } else {
             writeSigned.run();
-        }
-    }
-
-    private void writeArray(@NotNull ByteBufWriter writer, @NotNull Object value) throws IOException {
-        int length = Array.getLength(value);
-        writer.writeUnsignedVarInt(length);
-
-        for (int i = 0; i < length; i++) {
-            writeValue(new Annotation[0], writer, Array.get(value, i));
         }
     }
 

@@ -75,6 +75,7 @@ public class Packets {
             C2SPartyDisband.class,
             C2SPartyPlayUpdate.class,
             C2SPartySetMarker.class,
+            C2SPartyEntityAttacked.class,
 
             // Server-to-Client
             S2CDisconnected.class,
@@ -110,7 +111,8 @@ public class Packets {
             S2CPartyMemberStatusUpdate.class,
             S2CPartySync.class,
             S2CPartySetMarkerResult.class,
-            S2CPartyNewMarker.class
+            S2CPartyNewMarker.class,
+            S2CPartyEntityAttacked.class
     };
 
     /**

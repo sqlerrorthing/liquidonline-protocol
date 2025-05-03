@@ -9,7 +9,10 @@ import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
 import java.lang.annotation.Annotation;
-import java.lang.reflect.*;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.*;
 import java.util.function.Supplier;
 
@@ -109,7 +112,7 @@ public class ByteBufDeserializer {
                 buf.readBytes(bytes);
                 return bytes;
             } else {
-                return readArray(buf, componentType);
+                throw new UnsupportedOperationException("Not implemented yet.");
             }
         }
 
@@ -140,18 +143,6 @@ public class ByteBufDeserializer {
         } else {
             return readSigned.get();
         }
-    }
-
-    private Object readArray(@NotNull ByteBufReader buf, @NotNull Class<?> componentType) throws IOException {
-        int length = buf.readUnsignedVarInt();
-        Object array = Array.newInstance(componentType, length);
-
-        for (int i = 0; i < length; i++) {
-            Object element = readValue(buf, componentType, new Annotation[0], null, componentType.componentType());
-            Array.set(array, i, element);
-        }
-
-        return array;
     }
 
     private Object readList(ByteBufReader buf, Type[] actualTypeArguments) throws IOException {
