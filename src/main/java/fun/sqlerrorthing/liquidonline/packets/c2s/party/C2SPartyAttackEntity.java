@@ -2,6 +2,7 @@ package fun.sqlerrorthing.liquidonline.packets.c2s.party;
 
 import fun.sqlerrorthing.liquidonline.packets.Packet;
 import fun.sqlerrorthing.liquidonline.packets.PacketBound;
+import fun.sqlerrorthing.liquidonline.packets.s2c.party.S2CPartyMemberEntityAttack;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
@@ -10,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
 /**
  * Sent when a party member attacked an entity in the world.
  *
- * @see fun.sqlerrorthing.liquidonline.packets.s2c.friends.S2CPartyMemberEntityAttack
+ * @see S2CPartyMemberEntityAttack
  */
 @Data
 @SuperBuilder

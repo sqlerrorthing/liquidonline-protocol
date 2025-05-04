@@ -1,5 +1,7 @@
 package fun.sqlerrorthing.liquidonline;
 
+import fun.sqlerrorthing.liquidonline.packets.s2c.party.S2CPartyMemberEntityAttack;
+
 import java.time.Duration;
 
 /**
@@ -51,7 +53,7 @@ public class SharedConstants {
     /**
      * Maximum duration for which an attack remains valid.
      *
-     * @see fun.sqlerrorthing.liquidonline.packets.s2c.friends.S2CPartyMemberEntityAttack
+     * @see S2CPartyMemberEntityAttack
      * @see fun.sqlerrorthing.liquidonline.packets.c2s.party.C2SPartyAttackEntity
      */
     public static final Duration MAX_ATTACK_LIFE = Duration.ofSeconds(3);

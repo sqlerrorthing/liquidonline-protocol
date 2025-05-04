@@ -1,4 +1,4 @@
-package fun.sqlerrorthing.liquidonline.packets.s2c.friends;
+package fun.sqlerrorthing.liquidonline.packets.s2c.party;
 
 import fun.sqlerrorthing.liquidonline.packets.Packet;
 import fun.sqlerrorthing.liquidonline.packets.PacketBound;
