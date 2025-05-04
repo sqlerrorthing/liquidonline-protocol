@@ -1,6 +1,11 @@
 package fun.sqlerrorthing.liquidonline;
 
+import fun.sqlerrorthing.liquidonline.packets.c2s.party.C2SPartyAttackEntity;
 import fun.sqlerrorthing.liquidonline.packets.s2c.party.S2CPartyMemberEntityAttack;
+import fun.sqlerrorthing.liquidonline.packets.s2c.party.S2CPartyNewMarker;
+import fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.buffer.NettyBuffer;
+import fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.buffer.NettyBufferPacketSerializationStrategy;
+import fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.compilertime.CompilerTimeByteBufPacketSerializationStrategy;
 
 import java.time.Duration;
 
@@ -46,7 +51,7 @@ public class SharedConstants {
      *     will automatically expire and be removed.
      * </p>
      *
-     * @see fun.sqlerrorthing.liquidonline.packets.s2c.party.S2CPartyNewMarker
+     * @see S2CPartyNewMarker
      */
     public static final Duration MAX_MARKER_LIFETIME = Duration.ofSeconds(3);
 
@@ -54,16 +59,16 @@ public class SharedConstants {
      * Maximum duration for which an attack remains valid.
      *
      * @see S2CPartyMemberEntityAttack
-     * @see fun.sqlerrorthing.liquidonline.packets.c2s.party.C2SPartyAttackEntity
+     * @see C2SPartyAttackEntity
      */
     public static final Duration MAX_ATTACK_LIFE = Duration.ofSeconds(3);
 
     /**
      * Special byte value used to represent a null or uninitialized marker.
      *
-     * @see fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.buffer.NettyBuffer
-     * @see fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.buffer.NettyBufferPacketSerializationStrategy
-     * @see fun.sqlerrorthing.liquidonline.packets.strategy.impl.netty.compilertime.CompilerTimeByteBufPacketSerializationStrategy
+     * @see NettyBuffer
+     * @see NettyBufferPacketSerializationStrategy
+     * @see CompilerTimeByteBufPacketSerializationStrategy
      */
     public static final byte NULL_MARKER_BYTE = (byte) 0xC0;
 }
