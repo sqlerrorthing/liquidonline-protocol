@@ -9,6 +9,8 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * Sent when a party member attacked an entity in the world.
+ *
+ * @see fun.sqlerrorthing.liquidonline.packets.s2c.friends.S2CPartyMemberEntityAttack
  */
 @Data
 @SuperBuilder
@@ -16,7 +18,7 @@ import org.jetbrains.annotations.NotNull;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @AllArgsConstructor
 @NoArgsConstructor
-public class C2SPartyEntityAttacked implements Packet {
+public class C2SPartyAttackEntity implements Packet {
     /**
      * Attacked entity id.
      */

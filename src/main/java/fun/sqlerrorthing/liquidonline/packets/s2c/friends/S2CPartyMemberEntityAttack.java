@@ -9,7 +9,7 @@ import lombok.experimental.SuperBuilder;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * Sent to all party members when member attacked an entity.
+ * Sent to all party members when a party member attacked an entity.
  */
 @Data
 @SuperBuilder
@@ -17,7 +17,7 @@ import org.jetbrains.annotations.NotNull;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @AllArgsConstructor
 @NoArgsConstructor
-public class S2CPartyEntityAttacked implements Packet {
+public class S2CPartyMemberEntityAttack implements Packet {
     /**
      * The party member.
      */
@@ -25,9 +25,9 @@ public class S2CPartyEntityAttacked implements Packet {
     int memberId;
 
     /**
-     * The attacked entity in the world.
+     * The attacked entity id in the world.
      */
-    int attackedId;
+    int entity;
 
     @Override
     public byte id() {
