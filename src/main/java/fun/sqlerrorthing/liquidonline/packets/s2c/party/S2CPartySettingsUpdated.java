@@ -2,6 +2,7 @@ package fun.sqlerrorthing.liquidonline.packets.s2c.party;
 
 import fun.sqlerrorthing.liquidonline.packets.Packet;
 import fun.sqlerrorthing.liquidonline.packets.PacketBound;
+import fun.sqlerrorthing.liquidonline.packets.SerializedName;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
@@ -14,11 +15,12 @@ import org.jetbrains.annotations.NotNull;
 @AllArgsConstructor
 @NoArgsConstructor
 public class S2CPartySettingsUpdated implements Packet {
-    boolean isPublic;
+    @SerializedName("a")
+    boolean partyPublic;
 
     @Override
     public byte id() {
-        return 67;
+        return 103;
     }
 
     @Override

@@ -2,6 +2,7 @@ package fun.sqlerrorthing.liquidonline.packets.c2s.party;
 
 import fun.sqlerrorthing.liquidonline.packets.Packet;
 import fun.sqlerrorthing.liquidonline.packets.PacketBound;
+import fun.sqlerrorthing.liquidonline.packets.SerializedName;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
@@ -17,11 +18,12 @@ import org.jetbrains.annotations.NotNull;
 @AllArgsConstructor
 @NoArgsConstructor
 public class C2SPartyUpdateSettings implements Packet {
-    boolean isPubic;
+    @SerializedName("a")
+    boolean partyPublic;
 
     public static C2SPartyUpdateSettings isPublic(boolean isPublic) {
         return C2SPartyUpdateSettings.builder()
-                .isPubic(isPublic)
+                .partyPublic(isPublic)
                 .build();
     }
 
@@ -35,7 +37,7 @@ public class C2SPartyUpdateSettings implements Packet {
 
     @Override
     public byte id() {
-        return 68;
+        return 102;
     }
 
     @Override
