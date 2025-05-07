@@ -18,7 +18,7 @@ public class Writer {
         for (var field : clazz.getDeclaredFields()) {
             writeField(
                     pool,
-                    field.getName(),
+                    toGetterName(field.getType(), field.getName()) + "()",
                     field.getGenericSignature(),
                     field.getType(),
                     sb,
